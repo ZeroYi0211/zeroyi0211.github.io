@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>机械制造技术基础 · 章节刷题舱</title>
+  <style>
+    :root {
+      --paper: #f8faf8;
+      --ink: #151716;
+      --muted: #626a66;
+      --line: #d9dfdc;
+      --panel: #ffffff;
+      --acid: #c8ff2e;
+      --cyan: #18c7c1;
+      --red: #ff4b3e;
+      --amber: #ffb000;
+      --shadow: 0 18px 50px rgba(21, 23, 22, .09);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(21,23,22,.035) 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(rgba(21,23,22,.035) 1px, transparent 1px) 0 0 / 24px 24px,
+        var(--paper);
+      font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(248, 250, 248, .94);
+      backdrop-filter: blur(18px);
+    }
+
+    main { padding: 26px; min-width: 0; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--acid);
+      box-shadow: 5px 5px 0 var(--ink);
+      font-family: "STZhongsong", "SimSun", serif;
+      font-weight: 900;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      letter-spacing: 0;
+      font-family: "STZhongsong", "SimSun", serif;
+    }
+
+    h1 { font-size: 21px; line-height: 1.18; }
+    h2 { font-size: 22px; }
+
+    .sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .section-label {
+      margin: 20px 0 9px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .search {
+      width: 100%;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 12px 13px;
+      background: var(--panel);
+      outline: none;
+      box-shadow: 4px 4px 0 rgba(21,23,22,.14);
+    }
+
+    .search:focus { box-shadow: 4px 4px 0 var(--cyan); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--panel);
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      transition: transform .14s ease, background .14s ease;
+    }
+
+    .chip:hover { transform: translateY(-1px); }
+    .chip.active { background: var(--ink); color: white; }
+    .chip.warn.active { background: var(--red); border-color: var(--red); }
+
+    .toggle-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 10px 11px;
+      cursor: pointer;
+      font-weight: 800;
+      box-shadow: 3px 3px 0 rgba(21,23,22,.13);
+    }
+
+    .tool-btn.active, .tool-btn:hover { background: var(--acid); }
+
+    .chapter-list { display: grid; gap: 9px; }
+
+    .chapter-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 11px;
+      cursor: pointer;
+    }
+
+    .chapter-btn.active {
+      border: 2px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .chapter-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 7px;
+      margin-top: 9px;
+      background: #eef2ef;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--cyan), var(--acid));
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 290px;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-main {
+      position: relative;
+      min-height: 190px;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 88% 18%, rgba(200,255,46,.82) 0 48px, transparent 50px),
+        linear-gradient(135deg, #fff 0%, #fff 58%, #ebfffd 58%);
+      padding: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main:after {
+      content: "PRACTICE";
+      position: absolute;
+      right: -8px;
+      bottom: 6px;
+      font: 900 42px/1 Georgia, serif;
+      color: rgba(21,23,22,.07);
+      transform: rotate(-6deg);
+    }
+
+    .hero h2 {
+      max-width: 680px;
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .hero-note {
+      max-width: 720px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .stat b {
+      display: block;
+      font: 900 28px/1 Georgia, serif;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+
+    .select {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 9px 10px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 13px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-left: 7px solid var(--ink);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 10px 28px rgba(21,23,22,.06);
+      padding: 16px;
+      transition: transform .14s ease, border-color .14s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+    }
+
+    .card.done { border-left-color: var(--cyan); opacity: .78; }
+    .card.starred { box-shadow: 0 0 0 2px var(--amber), 0 10px 28px rgba(21,23,22,.06); }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: #f2f6f4;
+      border-radius: 999px;
+      padding: 4px 8px;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 1.85;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .choice-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .choice-option {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfdfc;
+      padding: 10px;
+      cursor: pointer;
+      line-height: 1.55;
+    }
+
+    .choice-option:hover { border-color: var(--ink); }
+
+    .choice-option.selected {
+      border: 2px solid var(--ink);
+      background: #effff7;
+      box-shadow: 4px 4px 0 rgba(24,199,193,.35);
+    }
+
+    .choice-letter {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-weight: 900;
+      background: var(--acid);
+    }
+
+    .answer-panel {
+      display: none;
+      margin-top: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f7fbf9;
+      padding: 13px;
+      line-height: 1.72;
+    }
+
+    .answer-panel.open { display: block; }
+
+    .answer-title {
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .answer-line {
+      margin: 2px 0;
+    }
+
+    .explanation-body {
+      margin-top: 8px;
+    }
+
+    .explanation-body strong {
+      font-weight: 900;
+    }
+
+    .answer-excerpt {
+      max-height: 170px;
+      overflow: auto;
+      margin-top: 9px;
+      padding: 10px;
+      border-left: 4px solid var(--cyan);
+      background: white;
+      color: #38403c;
+      font-size: 13px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    mark {
+      background: var(--acid);
+      color: var(--ink);
+      padding: 0 2px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 13px;
+    }
+
+    .mini {
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 7px 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .mini:hover { background: var(--acid); }
+    .mini.primary { background: var(--ink); color: white; }
+
+    .empty {
+      border: 2px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+      background: rgba(255,255,255,.68);
+    }
+
+    .load-error {
+      border: 2px solid var(--red);
+      background: #fff;
+      padding: 16px;
+      border-radius: var(--radius);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 920px) {
+      .app { grid-template-columns: 1fr; }
+      aside {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero { grid-template-columns: 1fr; }
+      main { padding: 18px; }
+    }
+
+    @media (max-width: 560px) {
+      .hero h2 { font-size: 27px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .toggle-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="mark">制</div>
+        <div>
+          <h1>章节刷题舱</h1>
+          <div class="sub">机械制造技术基础 · 历年卷客观题题库</div>
+        </div>
+      </div>
+
+      <input id="search" class="search" type="search" placeholder="搜关键词 / 来源 / 题型">
+
+      <div class="section-label">章节</div>
+      <div id="chapters" class="chapter-list"></div>
+
+      <div class="section-label">题型</div>
+      <div id="types" class="chips"></div>
+
+      <div class="section-label">来源卷</div>
+      <div id="sources" class="chips"></div>
+
+      <div class="section-label">状态</div>
+      <div class="toggle-row">
+        <button id="onlyTodo" class="tool-btn">只看未刷</button>
+        <button id="onlyStar" class="tool-btn">只看收藏</button>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero">
+        <div class="hero-main">
+          <h2>按章节刷选择、判断、填空，学完一章就开打。</h2>
+          <p class="hero-note">当前只保留客观题，筛掉没学过的章节，保留原卷页码。OCR 读不准的位置可以点「回原卷」核对。</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="totalCount">0</b><span>当前题目</span></div>
+          <div class="stat"><b id="doneCount">0</b><span>已刷</span></div>
+          <div class="stat"><b id="starCount">0</b><span>收藏</span></div>
+          <div class="stat"><b id="sourceCount">0</b><span>来源卷</span></div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <div>
+          <h2 id="viewTitle">全部章节</h2>
+          <div id="viewMeta" class="sub">正在加载题库...</div>
+        </div>
+        <div class="chips">
+          <button id="shuffle" class="tool-btn">随机顺序</button>
+          <select id="sort" class="select" aria-label="排序">
+            <option value="source">按来源页码</option>
+            <option value="chapter">按章节</option>
+            <option value="type">按题型</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="cards" class="cards"></div>
+    </main>
+  </div>
+
+  <script>
+    const DATA_URL = "interactive_questions.json";
+    const ALLOWED_KINDS = new Set(["choice", "tf", "blank"]);
+    const state = {
+      data: [],
+      chapter: "全部",
+      type: "全部",
+      source: "全部",
+      q: "",
+      onlyTodo: false,
+      onlyStar: false,
+      shuffled: false,
+      sort: "source",
+      done: new Set(JSON.parse(localStorage.getItem("mee_done") || "[]")),
+      star: new Set(JSON.parse(localStorage.getItem("mee_star") || "[]")),
+      selected: JSON.parse(localStorage.getItem("mee_selected") || "{}"),
+      revealed: new Set(),
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function keyOf(item) {
+      return [item.pdf, item.page, item.section, item.text.slice(0, 36)].join("|");
+    }
+
+    function saveState() {
+      localStorage.setItem("mee_done", JSON.stringify([...state.done]));
+      localStorage.setItem("mee_star", JSON.stringify([...state.star]));
+      localStorage.setItem("mee_selected", JSON.stringify(state.selected));
+    }
+
+    function uniq(list) {
+      return [...new Set(list)].filter(Boolean);
+    }
+
+    function esc(text) {
+      return String(text).replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    function highlight(text) {
+      const safe = esc(text);
+      const q = state.q.trim();
+      if (!q) return safe;
+      const token = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return safe.replace(new RegExp(token, "gi"), (m) => `<mark>${m}</mark>`);
+    }
+
+    function renderExplanation(text) {
+      const raw = String(text || "先定位章节关键词，再回原卷核对标准答案。")
+        .replace(/^<strong>(正确答案|判断|填写)<\/strong>：[^<]*(<br><br>)?/i, "");
+      return esc(raw)
+        .replace(/&lt;br\s*\/?&gt;/gi, "<br>")
+        .replace(/&lt;strong&gt;/gi, "<strong>")
+        .replace(/&lt;\/strong&gt;/gi, "</strong>");
+    }
+
+    function pdfHref(item) {
+      return `../${encodeURIComponent(item.pdf)}#page=${item.page}`;
+    }
+
+    function filtered() {
+      let rows = state.data.slice();
+      if (state.chapter !== "全部") rows = rows.filter(x => x.chapter === state.chapter);
+      if (state.type !== "全部") rows = rows.filter(x => x.section === state.type);
+      if (state.source !== "全部") rows = rows.filter(x => x.pdf === state.source);
+      if (state.onlyTodo) rows = rows.filter(x => !state.done.has(keyOf(x)));
+      if (state.onlyStar) rows = rows.filter(x => state.star.has(keyOf(x)));
+      if (state.q.trim()) {
+        const q = state.q.trim().toLowerCase();
+        rows = rows.filter(x =>
+          [x.chapter, x.pdf, x.section, x.cleanText || x.text, x.answer, x.explanation, ...(x.hits || [])].join(" ").toLowerCase().includes(q)
+        );
+      }
+      const sorters = {
+        source: (a, b) => a.pdf.localeCompare(b.pdf, "zh-Hans-CN") || a.page - b.page || (a.sourceNo || 999) - (b.sourceNo || 999),
+        chapter: (a, b) => a.chapter.localeCompare(b.chapter, "zh-Hans-CN") || a.pdf.localeCompare(b.pdf, "zh-Hans-CN"),
+        type: (a, b) => a.section.localeCompare(b.section, "zh-Hans-CN") || a.chapter.localeCompare(b.chapter, "zh-Hans-CN"),
+      };
+      rows.sort(sorters[state.sort]);
+      if (state.shuffled) rows = rows.map(x => [Math.sin(keyOf(x).length * 999 + x.page), x]).sort((a,b) => a[0] - b[0]).map(x => x[1]);
+      return rows;
+    }
+
+    function renderChapters() {
+      const box = $("chapters");
+      const chapters = ["全部", ...uniq(state.data.map(x => x.chapter))];
+      const totalByChapter = Object.fromEntries(chapters.map(ch => [ch, ch === "全部" ? state.data.length : state.data.filter(x => x.chapter === ch).length]));
+      box.innerHTML = chapters.map(ch => {
+        const rows = ch === "全部" ? state.data : state.data.filter(x => x.chapter === ch);
+        const done = rows.filter(x => state.done.has(keyOf(x))).length;
+        const pct = rows.length ? Math.round(done / rows.length * 100) : 0;
+        return `<button class="chapter-btn ${state.chapter === ch ? "active" : ""}" data-chapter="${esc(ch)}">
+          <div class="chapter-top"><span>${esc(ch)}</span><span>${totalByChapter[ch]}</span></div>
+          <div class="bar"><span style="width:${pct}%"></span></div>
+        </button>`;
+      }).join("");
+      box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        state.chapter = btn.dataset.chapter;
+        render();
+      }));
+    }
+
+    function renderChips(id, values, current, attr, warn = false) {
+      const box = $(id);
+      box.innerHTML = values.map(v => `<button class="chip ${warn ? "warn" : ""} ${current === v ? "active" : ""}" data-${attr}="${esc(v)}">${esc(v)}</button>`).join("");
+      box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        state[attr] = btn.dataset[attr];
+        render();
+      }));
+    }
+
+    function renderCards(rows) {
+      const box = $("cards");
+      if (!rows.length) {
+        box.innerHTML = `<div class="empty">这组筛选下暂时没有题。换个章节、题型或清空搜索试试。</div>`;
+        return;
+      }
+      box.innerHTML = rows.map((item, idx) => {
+        const key = keyOf(item);
+        const done = state.done.has(key);
+        const starred = state.star.has(key);
+        const selected = state.selected[key];
+        const revealed = state.revealed.has(key);
+        const tags = (item.hits || []).slice(0, 6).map(x => `<span class="tag">${esc(x)}</span>`).join("");
+        const text = item.cleanText || item.text;
+        const options = renderOptions(item, key, selected);
+        const excerpt = item.answerExcerpt
+          ? `<div class="answer-excerpt"><b>答案页 OCR 摘录：</b>${esc(item.answerExcerpt)}</div>`
+          : "";
+        return `<article class="card ${done ? "done" : ""} ${starred ? "starred" : ""}" data-key="${esc(key)}">
+          <div class="meta">
+            <span class="tag">#${idx + 1}</span>
+            <span class="tag">${esc(item.chapter)}</span>
+            <span class="tag">${esc(item.section)}</span>
+            <span class="tag">${esc(item.pdf)} · 第${item.page}页</span>
+            ${tags}
+          </div>
+          <div class="text">${highlight(text)}</div>
+          ${options}
+          <div class="answer-panel ${revealed ? "open" : ""}">
+            <div class="answer-title">答案 / 解析</div>
+            <div class="answer-line"><b>你的选择：</b>${selected ? esc(selected) : "未选择"}</div>
+            <div class="answer-line"><b>答案：</b>${esc(item.answer || "暂无结构化答案，请回原卷核对。")}</div>
+            <div class="explanation-body">${renderExplanation(item.explanation)}</div>
+            ${excerpt}
+          </div>
+          <div class="actions">
+            <button class="mini primary" data-action="done">${done ? "取消已刷" : "标为已刷"}</button>
+            <button class="mini" data-action="star">${starred ? "取消收藏" : "收藏"}</button>
+            <button class="mini" data-action="reveal">${revealed ? "收起答案" : "查看答案/解析"}</button>
+            <a class="mini" href="${pdfHref(item)}" target="_blank" rel="noreferrer">回原卷</a>
+            <button class="mini" data-action="copy">复制题干</button>
+          </div>
+        </article>`;
+      }).join("");
+
+      box.querySelectorAll("[data-choice]").forEach(btn => btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        state.selected[card.dataset.key] = btn.dataset.choice;
+        saveState();
+        render();
+      }));
+
+      box.querySelectorAll("[data-action]").forEach(btn => btn.addEventListener("click", async () => {
+        const card = btn.closest(".card");
+        const key = card.dataset.key;
+        const item = rows.find(x => keyOf(x) === key);
+        if (btn.dataset.action === "done") {
+          state.done.has(key) ? state.done.delete(key) : state.done.add(key);
+        }
+        if (btn.dataset.action === "star") {
+          state.star.has(key) ? state.star.delete(key) : state.star.add(key);
+        }
+        if (btn.dataset.action === "reveal") {
+          state.revealed.has(key) ? state.revealed.delete(key) : state.revealed.add(key);
+        }
+        if (btn.dataset.action === "copy") {
+          await navigator.clipboard.writeText(`${item.cleanText || item.text}\n来源：${item.pdf} 第${item.page}页`);
+          btn.textContent = "已复制";
+          setTimeout(() => btn.textContent = "复制题干", 900);
+          return;
+        }
+        saveState();
+        render();
+      }));
+    }
+
+    function renderOptions(item, key, selected) {
+      if (Array.isArray(item.options) && item.options.length) {
+        return `<div class="choice-grid">${item.options.map(opt => {
+          const value = `${opt.label}. ${opt.text}`;
+          return `<button class="choice-option ${selected === value ? "selected" : ""}" data-choice="${esc(value)}">
+            <span class="choice-letter">${esc(opt.label)}</span>
+            <span>${highlight(opt.text)}</span>
+          </button>`;
+        }).join("")}</div>`;
+      }
+      if (item.kind === "tf") {
+        return `<div class="choice-grid">
+          <button class="choice-option ${selected === "正确" ? "selected" : ""}" data-choice="正确">
+            <span class="choice-letter">✓</span><span>正确</span>
+          </button>
+          <button class="choice-option ${selected === "错误" ? "selected" : ""}" data-choice="错误">
+            <span class="choice-letter">×</span><span>错误</span>
+          </button>
+        </div>`;
+      }
+      return "";
+    }
+
+    function renderStats(rows) {
+      $("totalCount").textContent = rows.length;
+      $("doneCount").textContent = state.data.filter(x => state.done.has(keyOf(x))).length;
+      $("starCount").textContent = state.star.size;
+      $("sourceCount").textContent = uniq(state.data.map(x => x.pdf)).length;
+      $("viewTitle").textContent = state.chapter === "全部" ? "全部章节" : state.chapter;
+      $("viewMeta").textContent = `当前显示 ${rows.length} 条；题型 ${state.type}；来源 ${state.source}`;
+    }
+
+    function render() {
+      renderChapters();
+      renderChips("types", ["全部", ...uniq(state.data.map(x => x.section))], state.type, "type");
+      renderChips("sources", ["全部", ...uniq(state.data.map(x => x.pdf))], state.source, "source");
+      $("onlyTodo").classList.toggle("active", state.onlyTodo);
+      $("onlyStar").classList.toggle("active", state.onlyStar);
+      $("shuffle").classList.toggle("active", state.shuffled);
+      const rows = filtered();
+      renderStats(rows);
+      renderCards(rows);
+    }
+
+    async function init() {
+      try {
+        const res = await fetch(DATA_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        state.data = (await res.json()).filter(item => ALLOWED_KINDS.has(item.kind));
+      } catch (err) {
+        $("cards").innerHTML = `<div class="load-error">
+          <b>题库数据没有加载成功。</b><br>
+          如果你是直接双击 HTML 打开的，请改用本地服务访问本目录；浏览器通常会拦截 file:// 读取 JSON。<br>
+          错误信息：${esc(err.message)}
+        </div>`;
+        $("viewMeta").textContent = "加载失败";
+        return;
+      }
+      $("search").addEventListener("input", e => { state.q = e.target.value; render(); });
+      $("onlyTodo").addEventListener("click", () => { state.onlyTodo = !state.onlyTodo; render(); });
+      $("onlyStar").addEventListener("click", () => { state.onlyStar = !state.onlyStar; render(); });
+      $("shuffle").addEventListener("click", () => { state.shuffled = !state.shuffled; render(); });
+      $("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+      render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
