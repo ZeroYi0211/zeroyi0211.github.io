@@ -348,6 +348,12 @@
       box-shadow: 4px 4px 0 rgba(24,199,193,.35);
     }
 
+    .choice-option.selected.wrong {
+      border-color: #b42318;
+      background: #fff1f0;
+      box-shadow: 4px 4px 0 rgba(220,38,38,.28);
+    }
+
     .choice-letter {
       display: grid;
       place-items: center;
@@ -716,11 +722,35 @@
       }));
     }
 
+    function answerKeys(item) {
+      const answer = String(item.answer || "").trim();
+      if (item.kind === "tf") {
+        if (answer.includes("正确")) return ["正确"];
+        if (answer.includes("错误")) return ["错误"];
+        return [];
+      }
+      return [...new Set((answer.match(/[A-D]/gi) || []).map(x => x.toUpperCase()))];
+    }
+
+    function choiceKey(value) {
+      const text = String(value || "").trim();
+      if (text === "正确" || text === "错误") return text;
+      const match = text.match(/^([A-D])(?=[\s.。．、:：]|$)/i);
+      return match ? match[1].toUpperCase() : text;
+    }
+
+    function optionClass(item, value, selected) {
+      if (selected !== value) return "";
+      const keys = answerKeys(item);
+      if (!keys.length) return "selected";
+      return keys.includes(choiceKey(value)) ? "selected" : "selected wrong";
+    }
+
     function renderOptions(item, key, selected) {
       if (Array.isArray(item.options) && item.options.length) {
         return `<div class="choice-grid">${item.options.map(opt => {
           const value = `${opt.label}. ${opt.text}`;
-          return `<button class="choice-option ${selected === value ? "selected" : ""}" data-choice="${esc(value)}">
+          return `<button class="choice-option ${optionClass(item, value, selected)}" data-choice="${esc(value)}">
             <span class="choice-letter">${esc(opt.label)}</span>
             <span>${highlight(opt.text)}</span>
           </button>`;
@@ -728,10 +758,10 @@
       }
       if (item.kind === "tf") {
         return `<div class="choice-grid">
-          <button class="choice-option ${selected === "正确" ? "selected" : ""}" data-choice="正确">
+          <button class="choice-option ${optionClass(item, "正确", selected)}" data-choice="正确">
             <span class="choice-letter">✓</span><span>正确</span>
           </button>
-          <button class="choice-option ${selected === "错误" ? "selected" : ""}" data-choice="错误">
+          <button class="choice-option ${optionClass(item, "错误", selected)}" data-choice="错误">
             <span class="choice-letter">×</span><span>错误</span>
           </button>
         </div>`;
