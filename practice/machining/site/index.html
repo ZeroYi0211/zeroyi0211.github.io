@@ -319,6 +319,17 @@
       overflow-wrap: anywhere;
     }
 
+    .question-figure {
+      display: block;
+      max-width: min(100%, 720px);
+      max-height: 420px;
+      object-fit: contain;
+      margin: 12px 0 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
     .choice-grid {
       display: grid;
       gap: 8px;
@@ -342,7 +353,8 @@
 
     .choice-option:hover { border-color: var(--ink); }
 
-    .choice-option.selected {
+    .choice-option.selected,
+    .choice-option.correct {
       border: 2px solid var(--ink);
       background: #effff7;
       box-shadow: 4px 4px 0 rgba(24,199,193,.35);
@@ -584,7 +596,9 @@
 
     function renderExplanation(text) {
       const raw = String(text || "先定位章节关键词，再回原卷核对标准答案。")
-        .replace(/^<strong>(正确答案|判断|填写)<\/strong>：[^<]*(<br><br>)?/i, "");
+        .replace(/^<strong>(正确答案|判断|填写)<\/strong>[：:][^<]*(<br><br>)?/i, "")
+        .replace(/^<strong>(正确答案|答案|判断|填写)[：:].*?<\/strong>(<br><br>)?/i, "")
+        .replace(/^(正确答案|答案|判断|填写)[：:][^\n<]*(<br><br>|\n\n)?/i, "");
       return esc(raw)
         .replace(/&lt;br\s*\/?&gt;/gi, "<br>")
         .replace(/&lt;strong&gt;/gi, "<strong>")
@@ -661,6 +675,12 @@
         const tags = (item.hits || []).slice(0, 6).map(x => `<span class="tag">${esc(x)}</span>`).join("");
         const text = item.cleanText || item.text;
         const options = renderOptions(item, key, selected);
+        const figure = item.image
+          ? `<img class="question-figure" src="${esc(item.image)}" alt="题目配图" loading="lazy">`
+          : "";
+        const selectedLine = item.kind === "blank"
+          ? ""
+          : `<div class="answer-line"><b>你的选择：</b>${selected ? esc(selected) : "未选择"}</div>`;
         const excerpt = item.answerExcerpt
           ? `<div class="answer-excerpt"><b>答案页 OCR 摘录：</b>${esc(item.answerExcerpt)}</div>`
           : "";
@@ -673,10 +693,11 @@
             ${tags}
           </div>
           <div class="text">${highlight(text)}</div>
+          ${figure}
           ${options}
           <div class="answer-panel ${revealed ? "open" : ""}">
             <div class="answer-title">答案 / 解析</div>
-            <div class="answer-line"><b>你的选择：</b>${selected ? esc(selected) : "未选择"}</div>
+            ${selectedLine}
             <div class="answer-line"><b>答案：</b>${esc(item.answer || "暂无结构化答案，请回原卷核对。")}</div>
             <div class="explanation-body">${renderExplanation(item.explanation)}</div>
             ${excerpt}
@@ -729,7 +750,8 @@
         if (answer.includes("错误")) return ["错误"];
         return [];
       }
-      return [...new Set((answer.match(/[A-D]/gi) || []).map(x => x.toUpperCase()))];
+      const match = answer.match(/^([A-D])(?=[\s.。．、:：]|$)/i);
+      return match ? [match[1].toUpperCase()] : [];
     }
 
     function choiceKey(value) {
@@ -740,10 +762,13 @@
     }
 
     function optionClass(item, value, selected) {
-      if (selected !== value) return "";
       const keys = answerKeys(item);
-      if (!keys.length) return "selected";
-      return keys.includes(choiceKey(value)) ? "selected" : "selected wrong";
+      const isCorrect = keys.includes(choiceKey(value));
+      if (selected === value) {
+        if (!keys.length || isCorrect) return "selected";
+        return "selected wrong";
+      }
+      return selected && isCorrect ? "correct" : "";
     }
 
     function renderOptions(item, key, selected) {
