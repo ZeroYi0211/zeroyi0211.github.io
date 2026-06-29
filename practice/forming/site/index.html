@@ -163,7 +163,7 @@
     }
 
     async function unlock(password) {
-      const response = await fetch("payload.enc.json", { cache: "no-store" });
+      const response = await fetch("payload.enc.json?v=20260629-options-explanations-zh", { cache: "no-store" });
       if (!response.ok) throw new Error("加密题库没有加载成功");
       const payload = await response.json();
       const salt = base64ToBytes(payload.salt);
