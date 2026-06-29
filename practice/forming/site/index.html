@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>成型技术基础 · 加密刷题舱</title>
+  <style>
+    :root {
+      --paper: #f8faf8;
+      --ink: #151716;
+      --muted: #626a66;
+      --line: #d9dfdc;
+      --panel: #ffffff;
+      --acid: #c8ff2e;
+      --cyan: #18c7c1;
+      --red: #ff4b3e;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(21,23,22,.035) 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(rgba(21,23,22,.035) 1px, transparent 1px) 0 0 / 24px 24px,
+        var(--paper);
+      font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+    .gate {
+      width: min(620px, calc(100vw - 32px));
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 88% 14%, rgba(200,255,46,.82) 0 48px, transparent 50px),
+        linear-gradient(135deg, #fff 0%, #fff 58%, #ebfffd 58%);
+      box-shadow: 0 18px 50px rgba(21, 23, 22, .09);
+      padding: 28px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--acid);
+      box-shadow: 5px 5px 0 var(--ink);
+      font-family: "STZhongsong", "SimSun", serif;
+      font-weight: 900;
+    }
+    h1 {
+      margin: 0;
+      font: 900 28px/1.2 "STZhongsong", "SimSun", serif;
+      letter-spacing: 0;
+    }
+    p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    form {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+    input, button {
+      font: inherit;
+      border-radius: var(--radius);
+    }
+    input {
+      min-width: 0;
+      border: 2px solid var(--ink);
+      padding: 12px 13px;
+      background: var(--panel);
+      outline: none;
+      box-shadow: 4px 4px 0 rgba(21,23,22,.14);
+    }
+    input:focus { box-shadow: 4px 4px 0 var(--cyan); }
+    button {
+      border: 2px solid var(--ink);
+      background: var(--acid);
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    button:disabled {
+      cursor: wait;
+      opacity: .7;
+    }
+    .status {
+      min-height: 24px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .status.error { color: var(--red); font-weight: 800; }
+    .note {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+    @media (max-width: 560px) {
+      form { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="gate">
+    <div class="brand">
+      <div class="mark">成</div>
+      <div>
+        <h1>成型技术基础 · 加密刷题舱</h1>
+        <p>输入密码后在本机浏览器内解密题库，密码不会发送到服务器。</p>
+      </div>
+    </div>
+    <form id="unlockForm">
+      <input id="password" type="password" autocomplete="current-password" placeholder="输入访问密码" autofocus>
+      <button id="unlock" type="submit">解锁</button>
+    </form>
+    <div id="status" class="status">等待输入密码。</div>
+    <p class="note">这是静态加密页面。博客上保存的是密文，只有密码正确时才会解出刷题舱内容。</p>
+  </main>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const buttonEl = document.getElementById("unlock");
+    const passwordEl = document.getElementById("password");
+
+    function base64ToBytes(text) {
+      const binary = atob(text);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+
+    async function deriveKey(password, salt, iterations) {
+      const material = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
+      return crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
+        material,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["decrypt"]
+      );
+    }
+
+    async function unlock(password) {
+      const response = await fetch("payload.enc.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("加密题库没有加载成功");
+      const payload = await response.json();
+      const salt = base64ToBytes(payload.salt);
+      const iv = base64ToBytes(payload.iv);
+      const tag = base64ToBytes(payload.tag);
+      const ciphertext = base64ToBytes(payload.ciphertext);
+      const sealed = new Uint8Array(ciphertext.length + tag.length);
+      sealed.set(ciphertext, 0);
+      sealed.set(tag, ciphertext.length);
+      const key = await deriveKey(password, salt, payload.iterations);
+      const plaintext = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, sealed);
+      return new TextDecoder().decode(plaintext);
+    }
+
+    document.getElementById("unlockForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      statusEl.className = "status";
+      statusEl.textContent = "正在解密...";
+      buttonEl.disabled = true;
+      try {
+        const html = await unlock(passwordEl.value);
+        document.open();
+        document.write(html);
+        document.close();
+      } catch (error) {
+        statusEl.className = "status error";
+        statusEl.textContent = "密码不对，或加密题库损坏。";
+        buttonEl.disabled = false;
+        passwordEl.select();
+      }
+    });
+  </script>
+</body>
+</html>
