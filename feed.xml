@@ -4,7 +4,7 @@
   <id>https://zeroyi0211.github.io/</id>
   <title>Xiaoyi's Blog</title>
   <subtitle>Yi Kejun's personal blog.</subtitle>
-  <updated>2026-10-16T11:31:04+08:00</updated>
+  <updated>2026-10-16T16:28:22+08:00</updated>
   <author>
     <name>Yi Kejun</name>
     <uri>https://zeroyi0211.github.io/</uri>
@@ -17,6 +17,32 @@
   <icon>/assets/img/favicons/favicon.ico</icon>
   <logo>/assets/img/favicons/favicon-96x96.png</logo>
 
+
+  
+  <entry>
+    <title>经典控制理论口袋书：随时翻阅的 HTML 阅读版</title>
+    <link href="https://zeroyi0211.github.io/posts/classical-control-pocketbook/" rel="alternate" type="text/html" title="经典控制理论口袋书：随时翻阅的 HTML 阅读版" />
+    <published>2026-10-16T00:00:00+08:00</published>
+  
+    <updated>2026-10-16T00:00:00+08:00</updated>
+  
+    <id>https://zeroyi0211.github.io/posts/classical-control-pocketbook/</id>
+    <content type="text/html" src="https://zeroyi0211.github.io/posts/classical-control-pocketbook/" />
+    <author>
+      <name>Yi Kejun</name>
+    </author>
+
+  
+    
+    <category term="Learning" />
+    
+    <category term="Control" />
+    
+  
+
+  <summary>将经典控制理论口袋书重排为适合手机阅读的网页：前置知识、八个专题与变换附录，支持清晰公式、全书搜索和阅读位置记忆。</summary>
+
+  </entry>
 
   
   <entry>

@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f7f9"><meta name="description" content="经典控制理论口袋书阅读版：前置知识、八个专题与变换附录。清晰公式、章节搜索、阅读进度与原页对照。">
+<title>经典控制理论 · 口袋书</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23196c76'/%3E%3Cpath d='M6 33Q12 2 21 22T42 20' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="reader.css">
+<script>try{let p=JSON.parse(localStorage.getItem('control-preferences')||'{}');document.documentElement.dataset.theme=p.theme||'light';document.documentElement.style.setProperty('--reading-size',(p.size||18)+'px')}catch{}</script>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},startup:{typeset:false},options:{enableMenu:false}};</script>
+<script defer src="assets/mathjax/tex-svg.js"></script><script defer src="reader.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+<div class="drawer-shade" hidden></div>
+<aside class="sidebar" aria-label="全书目录">
+  <div class="brand"><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="11"/><path d="M5 31Q12 1 21 22T39 20"/></svg><div><strong>经典控制理论</strong><span>口袋书 · 阅读版</span></div><button class="drawer-close" aria-label="关闭目录">×</button></div>
+  <button class="search-trigger"><span>搜索全书</span><kbd>/</kbd></button>
+  <p class="nav-label">CONTENTS <span>全书目录</span></p>
+  <nav><button class="chapter-link" data-chapter="0"><span>前置</span>前置知识与工具表</button><button class="chapter-link" data-chapter="1"><span>01</span>自动控制的一般概念</button><button class="chapter-link" data-chapter="2"><span>02</span>控制系统的数学模型</button><button class="chapter-link" data-chapter="3"><span>03</span>线性系统的时域分析法</button><button class="chapter-link" data-chapter="4"><span>04</span>线性系统的根轨迹法</button><button class="chapter-link" data-chapter="5"><span>05</span>线性系统的频域分析法</button><button class="chapter-link" data-chapter="6"><span>06</span>线性系统的校正方法</button><button class="chapter-link" data-chapter="7"><span>07</span>离散控制系统</button><button class="chapter-link" data-chapter="8"><span>08</span>非线性控制系统分析</button><button class="chapter-link" data-chapter="9"><span>附录</span>附录：变换速查</button></nav>
+  <div class="sidebar-bottom"><button id="source-open">原页对照 <span>↗</span></button><a href="/">← 返回博客</a><small>真橙控制考研口袋书<br>随手翻阅，随时回想。</small></div>
+</aside>
+<div class="page-shell">
+  <header class="toolbar"><button id="menu" aria-label="打开目录" aria-expanded="false">☰ <span>目录</span></button><span class="current-title">经典控制理论</span><div class="tools"><button class="search-trigger mobile-search" aria-label="搜索全书">搜索</button><button id="font-smaller" aria-label="缩小字号">A−</button><button id="font-larger" aria-label="放大字号">A+</button><button id="theme-toggle" aria-label="切换深色模式">夜间</button></div></header>
+  <main id="main"><div id="resume-note" hidden><span></span><button id="resume-go">继续阅读 →</button><button id="resume-dismiss" aria-label="关闭阅读记录">×</button></div><article id="chapter-0" class="chapter" data-chapter="0" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 前置</p><h1>前置知识与工具表</h1><p class="chapter-meta">数学、物理与常用数值</p></header><h2 id="c0-s1" tabindex="-1">三角函数</h2>
+<p>自动控制原理中常用的数学运算以基础知识为主。和差公式使用频率较高：</p>
+<div class="equation">\[
+\begin{aligned}
+\sin(\alpha\pm\beta)&amp;=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta,\\
+\cos(\alpha\pm\beta)&amp;=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta,\\
+\tan(\alpha\pm\beta)&amp;=\frac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta}.
+\end{aligned}
+\]</div>
+<div class="equation">\[
+\arctan x\pm\arctan y=\arctan\frac{x\pm y}{1\mp xy}\pmod\pi.
+\]</div>
+<aside class="note">校注：反正切主值的和差还需要按象限调整，不能不加条件地把模 <span class="math-inline">\(\pi\)</span> 的等式当作主值恒等式。</aside>
+<figure><button class="figure-open" type="button" aria-label="放大：正弦函数，矢量重绘"><img src="assets/sin.svg" alt="正弦函数，矢量重绘" loading="lazy" decoding="async"></button><figcaption>正弦函数，矢量重绘</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：余弦函数，矢量重绘"><img src="assets/cos.svg" alt="余弦函数，矢量重绘" loading="lazy" decoding="async"></button><figcaption>余弦函数，矢量重绘</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：正切函数，矢量重绘"><img src="assets/tan.svg" alt="正切函数，矢量重绘" loading="lazy" decoding="async"></button><figcaption>正切函数，矢量重绘</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：反正切函数，矢量重绘"><img src="assets/atan.svg" alt="反正切函数，矢量重绘" loading="lazy" decoding="async"></button><figcaption>反正切函数，矢量重绘</figcaption></figure>
+<h2 id="c0-s2" tabindex="-1">代数运算</h2>
+<h3 id="c0-s3" tabindex="-1">指数与对数</h3>
+<div class="equation">\[
+\begin{gathered}
+a^\alpha a^\beta=a^{\alpha+\beta},\qquad \frac{a^\alpha}{a^\beta}=a^{\alpha-\beta},\qquad (a^\alpha)^\beta=a^{\alpha\beta},\\
+(ab)^\alpha=a^\alpha b^\alpha,\qquad \left(\frac ab\right)^\alpha=\frac{a^\alpha}{b^\alpha}.
+\end{gathered}
+\]</div>
+<div class="equation">\[
+\begin{aligned}
+\log_a(MN)&amp;=\log_aM+\log_aN,\\
+\log_a\frac MN&amp;=\log_aM-\log_aN,\\
+\log_a M^n&amp;=n\log_aM,\qquad \log_a\sqrt[n]M=\frac1n\log_aM.
+\end{aligned}
+\]</div>
+<p>对数运算中，<span class="math-inline">\(a&gt;0\)</span>、<span class="math-inline">\(a\ne1\)</span>，真数为正；实数范围的指数运算也应满足相应的定义域条件。</p>
+<h3 id="c0-s4" tabindex="-1">一元二次方程</h3>
+<div class="equation">\[
+ax^2+bx+c=0\ (a\ne0),\qquad x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}.
+\]</div>
+<div class="equation">\[
+x_1+x_2=-\frac ba,\qquad x_1x_2=\frac ca,\qquad \Delta=b^2-4ac.
+\]</div>
+<ul><li><span class="math-inline">\(\Delta&gt;0\)</span>：两个不相等的实根。</li><li><span class="math-inline">\(\Delta=0\)</span>：两个相等的实根。</li><li><span class="math-inline">\(\Delta&lt;0\)</span>：一对共轭复根。</li></ul>
+<p>抛物线 <span class="math-inline">\(y=ax^2+bx+c\)</span> 的顶点为 <span class="math-inline">\(\left(-\frac b{2a},c-\frac{b^2}{4a}\right)\)</span>。</p>
+<h3 id="c0-s5" tabindex="-1">因式分解</h3>
+<div class="equation">\[
+(a\pm b)^2=a^2\pm2ab+b^2.
+\]</div>
+<div class="equation">\[
+\begin{aligned}
+(a+b)^3&amp;=a^3+3a^2b+3ab^2+b^3,\\
+(a-b)^3&amp;=a^3-3a^2b+3ab^2-b^3,\\
+a^3-b^3&amp;=(a-b)(a^2+ab+b^2),\\
+a^3+b^3&amp;=(a+b)(a^2-ab+b^2),\\
+a^2-b^2&amp;=(a-b)(a+b).
+\end{aligned}
+\]</div>
+<h2 id="c0-s6" tabindex="-1">复数、复变量与复函数</h2>
+<p>复数由实部和虚部组成；实部或虚部随变量变化时称为复变量。拉普拉斯变换中通常用 <span class="math-inline">\(s\)</span> 表示复变量：</p>
+<div class="equation">\[
+s=\sigma+j\omega,\qquad |s|=\sqrt{\sigma^2+\omega^2},\qquad \bar s=\sigma-j\omega.
+\]</div>
+<p>第一象限时，相角 <span class="math-inline">\(\theta=\arctan(\omega/\sigma)\)</span>；一般情况要按象限确定。相角从正实轴起沿逆时针方向计算。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：复数的幅值、相角、加法与减法"><img src="assets/crop-9-130-492-535-625.webp" alt="复数的幅值、相角、加法与减法" loading="lazy" decoding="async"></button><figcaption>复数的幅值、相角、加法与减法</figcaption></figure>
+<div class="equation">\[
+1+\sqrt3j=2\left(\cos\frac\pi3+j\sin\frac\pi3\right)=2e^{j\pi/3}=2\angle\frac\pi3.
+\]</div>
+<h3 id="c0-s7" tabindex="-1">复数的四则运算</h3>
+<div class="equation">\[
+\begin{aligned}
+(1+2j)+(2+j)&amp;=3+3j,\\
+(1+2j)-(2+j)&amp;=-1+j,\\
+(a\angle\theta)(b\angle\phi)&amp;=ab\angle(\theta+\phi),\\
+\frac{a\angle\theta}{b\angle\phi}&amp;=\frac ab\angle(\theta-\phi).
+\end{aligned}
+\]</div>
+<p>复函数 <span class="math-inline">\(G(s)\)</span> 具有实部与虚部：</p>
+<div class="equation">\[
+G(s)=G_x(s)+jG_y(s),\quad |G|=\sqrt{G_x^2+G_y^2},\quad \overline{G(s)}=G_x-jG_y.
+\]</div>
+<p>幅角可由 <span class="math-inline">\(\arctan(G_y/G_x)\)</span> 结合象限确定。</p>
+<h3 id="c0-s8" tabindex="-1">欧拉公式</h3>
+<div class="equation">\[
+e^{j\theta}=\cos\theta+j\sin\theta,\qquad -A=Ae^{j(2k+1)\pi},\quad k=0,\pm1,\pm2,\ldots
+\]</div>
+<h2 id="c0-s9" tabindex="-1">极限</h2>
+<p>初值与终值定理常涉及以下形式的极限计算。以下各例沿用原书表达，使用定理前仍应检查适用条件。</p>
+<div class="equation">\[
+\begin{aligned}
+y(0^+)&amp;=\lim_{s\to\infty}s\frac{\tau s+1}{Ts+1}\frac1s=\frac\tau T,\\
+y(\infty)&amp;=\lim_{s\to0}s\frac{\tau s+1}{Ts+1}\frac1s=1.
+\end{aligned}
+\]</div>
+<div class="equation">\[
+e_{ss}=\lim_{s\to0}sE(s)=\lim_{s\to0}s\frac{s^2+k\tau s}{s^2+k\tau s+k}\frac1{s^2}=\tau.
+\]</div>
+<div class="equation">\[
+c(\infty)=\lim_{s\to0}s\frac1s\frac{k(s+1)}{\tfrac12s^2+2s+1}=k.
+\]</div>
+<h2 id="c0-s10" tabindex="-1">导数与积分</h2>
+<p>积分是求导的逆运算。常用求导公式如下：</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>函数</th><th>导数</th></tr>
+<tr><td><span class="math-inline">\(C\)</span></td><td><span class="math-inline">\(0\)</span></td></tr>
+<tr><td><span class="math-inline">\(x^\mu\)</span></td><td><span class="math-inline">\(\mu x^{\mu-1}\)</span></td></tr>
+<tr><td><span class="math-inline">\(\sin x\)</span></td><td><span class="math-inline">\(\cos x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\cos x\)</span></td><td><span class="math-inline">\(-\sin x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\tan x\)</span></td><td><span class="math-inline">\(\sec^2x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\cot x\)</span></td><td><span class="math-inline">\(-\csc^2x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\sec x\)</span></td><td><span class="math-inline">\(\sec x\tan x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\csc x\)</span></td><td><span class="math-inline">\(-\csc x\cot x\)</span></td></tr>
+<tr><td><span class="math-inline">\(a^x\)</span></td><td><span class="math-inline">\(a^x\ln a\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^x\)</span></td><td><span class="math-inline">\(e^x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\log_ax\)</span></td><td><span class="math-inline">\(1/(x\ln a)\)</span></td></tr>
+<tr><td><span class="math-inline">\(\ln x\)</span></td><td><span class="math-inline">\(1/x\)</span></td></tr>
+<tr><td><span class="math-inline">\(\arcsin x\)</span></td><td><span class="math-inline">\(1/\sqrt{1-x^2}\)</span></td></tr>
+<tr><td><span class="math-inline">\(\arccos x\)</span></td><td><span class="math-inline">\(-1/\sqrt{1-x^2}\)</span></td></tr>
+<tr><td>函数</td><td>导数</td></tr>
+<tr><td><span class="math-inline">\(\arctan x\)</span></td><td><span class="math-inline">\(1/(1+x^2)\)</span></td></tr>
+<tr><td><span class="math-inline">\(\operatorname{arccot}x\)</span></td><td><span class="math-inline">\(-1/(1+x^2)\)</span></td></tr>
+</table></div>
+<p>其中指数、对数公式中的 <span class="math-inline">\(a&gt;0\)</span>、<span class="math-inline">\(a\ne1\)</span>。</p>
+<h2 id="c0-s11" tabindex="-1">解析几何</h2>
+<p>根轨迹和奈奎斯特曲线有时需要证明为标准曲线，其中圆的方程尤其常见。</p>
+<div class="equation">\[
+\begin{aligned}
+\text{圆：}&amp;\quad (x-a)^2+(y-b)^2=r^2,\\
+\text{抛物线：}&amp;\quad y=ax^2+bx+c,\\
+\text{椭圆：}&amp;\quad \frac{x^2}{a^2}+\frac{y^2}{b^2}=1.
+\end{aligned}
+\]</div>
+<p>圆的圆心为 <span class="math-inline">\((a,b)\)</span>，半径为 <span class="math-inline">\(r\)</span>。当椭圆 <span class="math-inline">\(a&gt;b&gt;0\)</span> 时，顶点为 <span class="math-inline">\((\pm a,0)\)</span>、<span class="math-inline">\((0,\pm b)\)</span>，焦点为 <span class="math-inline">\((\pm c,0)\)</span>，且 <span class="math-inline">\(a^2=b^2+c^2\)</span>。</p>
+<h2 id="c0-s12" tabindex="-1">基本不等式</h2>
+<p>在参数范围内求最大值、最小值时可能用到：</p>
+<div class="equation">\[
+\frac2{\frac1a+\frac1b}\le\sqrt{ab}\le\frac{a+b}2\le\sqrt{\frac{a^2+b^2}2},\qquad a,b&gt;0.
+\]</div>
+<p>当且仅当 <span class="math-inline">\(a=b\)</span> 时取等号。</p>
+<div class="equation">\[
+\bigl||a|-|b|\bigr|\le|a\pm b|\le|a|+|b|.
+\]</div>
+<h2 id="c0-s13" tabindex="-1">电学：无源网络</h2>
+<p>RLC网络是建立数学模型和理解典型环节的重要载体。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>元件</th><th>基本规律</th><th>零初始条件下的复阻抗</th></tr>
+<tr><td>电阻</td><td><span class="math-inline">\(u_R=Ri_R\)</span></td><td><span class="math-inline">\(R\)</span></td></tr>
+<tr><td>电容</td><td><span class="math-inline">\(i_C=C\,du_C/dt\)</span></td><td><span class="math-inline">\(1/(Cs)\)</span></td></tr>
+<tr><td>电感</td><td><span class="math-inline">\(u_L=L\,di_L/dt\)</span></td><td><span class="math-inline">\(Ls\)</span></td></tr>
+</table></div>
+<figure><button class="figure-open" type="button" aria-label="放大：电阻、电容、电感的参考方向"><img src="assets/crop-13-195-335-365-520.webp" alt="电阻、电容、电感的参考方向" loading="lazy" decoding="async"></button><figcaption>电阻、电容、电感的参考方向</figcaption></figure>
+<h3 id="c0-s14" tabindex="-1">串联与并联</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>关系</th><th>串联</th><th>并联</th></tr>
+<tr><td>电流</td><td><span class="math-inline">\(I=I_1=I_2\)</span></td><td><span class="math-inline">\(I=I_1+I_2\)</span>，<span class="math-inline">\(I_1/I_2=R_2/R_1\)</span></td></tr>
+<tr><td>电压</td><td><span class="math-inline">\(U=U_1+U_2\)</span>，<span class="math-inline">\(U_1/U_2=R_1/R_2\)</span></td><td><span class="math-inline">\(U=U_1=U_2\)</span></td></tr>
+<tr><td>电阻</td><td><span class="math-inline">\(R=R_1+R_2\)</span></td><td><span class="math-inline">\(1/R=1/R_1+1/R_2\)</span></td></tr>
+</table></div>
+<aside class="note">校注：原稿并联电流关系一格的等号疑有排印错误，此处按基尔霍夫电流定律写为电流之和。</aside>
+<h3 id="c0-s15" tabindex="-1">基尔霍夫定律</h3>
+<p>基尔霍夫电流定律（KCL）：任何节点，在任一时刻流入电流总和等于流出电流总和，电流的代数和为零。</p>
+<div class="equation">\[
+\sum i_{\rm in}=\sum i_{\rm out},\qquad \sum i=0.
+\]</div>
+<figure><button class="figure-open" type="button" aria-label="放大：节点电流方向示例"><img src="assets/crop-14-188-404-367-559.webp" alt="节点电流方向示例" loading="lazy" decoding="async"></button><figcaption>节点电流方向示例</figcaption></figure>
+<div class="equation">\[
+I_1+I_3-I_2-I_4=0.
+\]</div>
+<p>基尔霍夫电压定律（KVL）：同一瞬时，沿任一回路绕行一周，各部分电压降的代数和等于零，即升压等于降压。这是能量守恒在电路中的具体体现。</p>
+<div class="equation">\[
+\sum u=0.
+\]</div>
+<figure><button class="figure-open" type="button" aria-label="放大：双回路电路示例"><img src="assets/crop-15-201-110-449-240.webp" alt="双回路电路示例" loading="lazy" decoding="async"></button><figcaption>双回路电路示例</figcaption></figure>
+<p>按图假设电流方向，两个回路的KVL方程为：</p>
+<div class="equation">\[
+I_1R_1+I_3R_3=E_1,\qquad I_2R_2+I_3R_3=E_2.
+\]</div>
+<p>若求得 <span class="math-inline">\(I_1\)</span> 或 <span class="math-inline">\(I_2\)</span> 为负，实际电流方向与假设相反。</p>
+<h2 id="c0-s16" tabindex="-1">电学：运算放大器</h2>
+<p>理想运算放大器的两个常用特性：</p>
+<ul><li>虚短：在理想线性负反馈工作条件下，两输入端电位相等，<span class="math-inline">\(u_+=u_-\)</span>，并非真正短接。</li><li>虚断：输入电阻趋于无穷大，输入端电流为零，<span class="math-inline">\(i_+=i_-\approx0\)</span>，并非真正断路。</li></ul>
+<h3 id="c0-s17" tabindex="-1">反相比例运算电路</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：反相运算放大器电路"><img src="assets/crop-16-107-288-484-461.webp" alt="反相运算放大器电路" loading="lazy" decoding="async"></button><figcaption>反相运算放大器电路</figcaption></figure>
+<p>由虚断得 <span class="math-inline">\(i_1=i_f\)</span>，由虚短得 <span class="math-inline">\(u_-=u_+=0\)</span>。因此：</p>
+<div class="equation">\[
+i_1=\frac{u_i-u_-}{R_1},\qquad i_f=\frac{u_--u_o}{R_f},\qquad \frac{u_i}{R_1}=-\frac{u_o}{R_f}.
+\]</div>
+<div class="equation">\[
+\frac{u_o}{u_i}=-\frac{R_f}{R_1}.
+\]</div>
+<h2 id="c0-s18" tabindex="-1">力学</h2>
+<p>自动控制原理中常用小车、弹簧、阻尼器等建立力学模型。</p>
+<p>牛顿第二定律、第三定律与力矩关系：</p>
+<div class="equation">\[
+F_{\rm 合}=ma=m\dot v=m\ddot x,\qquad M=F_1L_1=F_2L_2.
+\]</div>
+<p>作用力与反作用力大小相等、方向相反，作用在同一直线上。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>基本要素</th><th>运动方程</th></tr>
+<tr><td>质量 <span class="math-inline">\(m\)</span></td><td><span class="math-inline">\(F=m\ddot x\)</span></td></tr>
+<tr><td>弹性系数 <span class="math-inline">\(k\)</span></td><td><span class="math-inline">\(F=k(x_1-x_2)=kx\)</span></td></tr>
+<tr><td>黏性阻尼系数 <span class="math-inline">\(f\)</span></td><td><span class="math-inline">\(F=f(v_1-v_2)=f\dot x\)</span></td></tr>
+<tr><td>转动惯量 <span class="math-inline">\(J\)</span></td><td><span class="math-inline">\(T=J\,d\Omega/dt=J\,d^2\theta/dt^2\)</span></td></tr>
+</table></div>
+<figure><button class="figure-open" type="button" aria-label="放大：质量、弹簧、阻尼及转动惯量示意图"><img src="assets/crop-17-186-315-387-681.webp" alt="质量、弹簧、阻尼及转动惯量示意图" loading="lazy" decoding="async"></button><figcaption>质量、弹簧、阻尼及转动惯量示意图</figcaption></figure>
+<h3 id="c0-s19" tabindex="-1">弹簧—质量—阻尼系统</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：竖直弹簧—质量—阻尼系统"><img src="assets/crop-18-189-144-381-318.webp" alt="竖直弹簧—质量—阻尼系统" loading="lazy" decoding="async"></button><figcaption>竖直弹簧—质量—阻尼系统</figcaption></figure>
+<p>输入为外力 <span class="math-inline">\(F(t)\)</span>，输出为位移 <span class="math-inline">\(y(t)\)</span>。取竖直向下为正，且以 <span class="math-inline">\(F(t)=0\)</span> 时的平衡位置作为位移零点。受力包括外力、弹簧力 <span class="math-inline">\(F_k\)</span>、阻尼力 <span class="math-inline">\(F_B\)</span> 和重力：</p>
+<div class="equation">\[
+F(t)-F_k-F_B+mg=m\frac{d^2y}{dt^2}.
+\]</div>
+<div class="equation">\[
+F_B=f\frac{dy}{dt},\qquad F_k=k(y+y_0),\qquad mg=ky_0.
+\]</div>
+<p>这里 <span class="math-inline">\(y_0\)</span> 是静平衡位置的弹簧伸长量。消去静平衡项并整理：</p>
+<div class="equation">\[
+\frac mk\frac{d^2y}{dt^2}+\frac fk\frac{dy}{dt}+y=\frac1kF(t).
+\]</div>
+<h2 id="c0-s20" tabindex="-1">常用数值表</h2>
+<h3 id="c0-s21" tabindex="-1">二阶欠阻尼系统</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>超调量 <span class="math-inline">\(\sigma\%\)</span></th><th><span class="math-inline">\(\beta\)</span></th><th>阻尼比 <span class="math-inline">\(\zeta\)</span></th></tr>
+<tr><td><span class="math-inline">\(4.32\%\)</span></td><td><span class="math-inline">\(45^\circ\)</span></td><td><span class="math-inline">\(0.707\)</span></td></tr>
+<tr><td><span class="math-inline">\(16.3\%\)</span></td><td><span class="math-inline">\(60^\circ\)</span></td><td><span class="math-inline">\(0.5\)</span></td></tr>
+<tr><td><span class="math-inline">\(33.3\%\)</span></td><td>—</td><td><span class="math-inline">\(0.33\)</span></td></tr>
+<tr><td><span class="math-inline">\(0.43\%\)</span></td><td><span class="math-inline">\(30^\circ\)</span></td><td><span class="math-inline">\(0.866\)</span></td></tr>
+</table></div>
+<div class="equation">\[
+e^{-1}\approx0.368,\quad e^{-2}\approx0.135.
+\]</div>
+<div class="equation">\[
+\begin{gathered}
+\sqrt2\approx1.414,\quad\sqrt3\approx1.732,\quad\sqrt5\approx2.236,\quad\sqrt6\approx2.449,\\
+\sqrt7\approx2.646,\quad\sqrt8\approx2.828,\quad\sqrt{10}\approx3.162.
+\end{gathered}
+\]</div>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>角度</th><th>正弦</th><th>余弦</th><th>正切</th></tr>
+<tr><td><span class="math-inline">\(30^\circ\)</span></td><td><span class="math-inline">\(1/2\)</span></td><td><span class="math-inline">\(\sqrt3/2\)</span></td><td><span class="math-inline">\(\sqrt3/3\)</span></td></tr>
+<tr><td><span class="math-inline">\(45^\circ\)</span></td><td><span class="math-inline">\(\sqrt2/2\)</span></td><td><span class="math-inline">\(\sqrt2/2\)</span></td><td><span class="math-inline">\(1\)</span></td></tr>
+<tr><td><span class="math-inline">\(60^\circ\)</span></td><td><span class="math-inline">\(\sqrt3/2\)</span></td><td><span class="math-inline">\(1/2\)</span></td><td><span class="math-inline">\(\sqrt3\)</span></td></tr>
+</table></div>
+<p>上述数值反过来对应反正弦、反余弦和反正切的常用主值。</p>
+<aside class="note">校注：原稿此处将 <span class="math-inline">\(\arctan(1/2)\)</span> 写为 <span class="math-inline">\(60^\circ\)</span>，应为 <span class="math-inline">\(\arctan\sqrt3=60^\circ\)</span>。</aside>
+<div class="equation">\[
+\begin{aligned}
+\sin37^\circ=\cos53^\circ&amp;\approx0.6,&amp;\tan37^\circ&amp;\approx\frac34,\\
+\cos37^\circ=\sin53^\circ&amp;\approx0.8,&amp;\tan53^\circ&amp;\approx\frac43.
+\end{aligned}
+\]</div>
+<h2 id="c0-s22" tabindex="-1">经典控制理论知识脉络</h2>
+<ul><li>一般概念：基本原理、基本组成、基本控制方式。</li><li>数学模型：微分方程、传递函数、典型环节、结构图、信号流图。</li><li>时域分析：性能指标、一阶与二阶系统、稳定性、稳态误差。</li><li>根轨迹：幅角条件、基本法则、参数根轨迹、系统性能。</li><li>频域分析：频率特性、典型环节、极坐标图、对数坐标图、稳定判据、性能指标。</li><li>系统校正：校正方式、基本规律、常用装置、串联与复合校正。</li><li>离散系统：采样与复现、Z变换、脉冲传递函数、稳定性与稳态误差。</li><li>非线性系统：非线性特征、相平面法、描述函数法。</li></ul><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-1" class="chapter" data-chapter="1" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 01</p><h1>自动控制的一般概念</h1><p class="chapter-meta">专题 1 · 经典控制理论</p></header><h2 id="c1-s1" tabindex="-1">基本原理与五个信号量</h2>
+<p>自动控制是在无人直接参与的情况下，利用控制装置操纵受控对象，使被控量等于给定值，或按给定信号的变化规律变化。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：反馈系统的信号关系"><img src="assets/feedback.svg" alt="反馈系统的信号关系" loading="lazy" decoding="async"></button><figcaption>反馈系统的信号关系</figcaption></figure>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>信号</th><th>意义</th></tr>
+<tr><td>被控量 <span class="math-inline">\(c(t)\)</span></td><td>表征受控对象特征的关键参数，即输出量</td></tr>
+<tr><td>给定量 <span class="math-inline">\(r(t)\)</span></td><td>希望被控量达到理想值时对应的参考输入</td></tr>
+<tr><td>扰动量 <span class="math-inline">\(d(t)\)</span></td><td>影响被控量变化的干扰因素</td></tr>
+<tr><td>反馈量 <span class="math-inline">\(b(t)\)</span></td><td>检测元件的输出，与被控量对应，并与给定量具有相同性质</td></tr>
+<tr><td>偏差量 <span class="math-inline">\(e(t)\)</span></td><td><span class="math-inline">\(e(t)=r(t)-b(t)\)</span></td></tr>
+</table></div>
+<p>重点理解信号之间的关系，它是读结构图、求传递函数和误差的基础。</p>
+<h2 id="c1-s2" tabindex="-1">控制方式</h2>
+<h3 id="c1-s3" tabindex="-1">开环控制</h3>
+<p>控制装置（控制器与执行器）和受控对象之间只有顺向作用、没有反向联系。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：开环控制系统"><img src="assets/crop-22-101-318-462-405.webp" alt="开环控制系统" loading="lazy" decoding="async"></button><figcaption>开环控制系统</figcaption></figure>
+<p>输出量不影响输入量；对干扰和参数变化没有自动补偿作用，精度主要取决于元件精度。结构简单，调整方便，适用于精度要求不高或干扰较小的场合。</p>
+<aside class="note">校注：原书“没有稳定性的问题”应理解为没有闭环反馈引起的稳定性问题；开环对象自身仍可能不稳定。</aside>
+<h3 id="c1-s4" tabindex="-1">反馈控制</h3>
+<p>反馈控制按偏差产生控制作用。任何原因使被控量偏离期望值时，系统产生相应控制作用，降低或消除偏差。按作用原理称偏差控制，按组成结构称闭环控制。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：反馈控制系统的基本组成"><img src="assets/crop-23-141-164-527-302.webp" alt="反馈控制系统的基本组成" loading="lazy" decoding="async"></button><figcaption>反馈控制系统的基本组成</figcaption></figure>
+<p>闭环与开环是两种基本方式；复合控制将反馈与前馈等方式结合。</p>
+<h2 id="c1-s5" tabindex="-1">系统分类</h2>
+<p>可按信号流向分为开环、闭环和复合控制系统。</p>
+<p>线性连续系统可用线性微分方程描述：</p>
+<div class="equation">\[
+a_0c^{(n)}(t)+a_1c^{(n-1)}(t)+\cdots+a_nc(t)
+=b_0r^{(m)}(t)+b_1r^{(m-1)}(t)+\cdots+b_mr(t).
+\]</div>
+<p>系数为常数时是定常系统；系数随时间变化时是时变系统。系统中存在非线性输入—输出关系时，应按整体输入—输出关系判断是否为非线性系统。</p>
+<p>判断线性关系时，输入、输出及其各阶导数只能一次出现，彼此不能相乘、取绝对值、开方、取高次幂或做非线性复合运算；积分对输入、输出保持线性。独立的非零常数项使关系成为仿射关系，不满足零输入零输出。</p>
+<h3 id="c1-s6" tabindex="-1">原书判断练习</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>关系式</th><th>分类</th></tr>
+<tr><td><span class="math-inline">\(c(t)=5+r^2(t)+t\,r^{(3)}(t)\)</span></td><td>非线性时变系统</td></tr>
+<tr><td><span class="math-inline">\(c^{(4)}(t)+3c^{(3)}(t)+6\dot c(t)+8c(t)=r(t)\)</span></td><td>线性定常系统</td></tr>
+<tr><td><span class="math-inline">\(t\dot c(t)+c(t)=r(t)+3\dot r(t)\)</span></td><td>线性时变系统</td></tr>
+<tr><td><span class="math-inline">\(c(t)=r(t)\cos\omega t+5\)</span></td><td>非线性时变系统（含独立常数项）</td></tr>
+<tr><td><span class="math-inline">\(c(t)=3r(t)+6\dot r(t)+5\int_{-\infty}^{t}r(\tau)\,d\tau\)</span></td><td>线性定常系统</td></tr>
+<tr><td><span class="math-inline">\(c(t)=r^2(t)\)</span></td><td>非线性定常系统</td></tr>
+<tr><td><span class="math-inline">\(c(t)=0\ (t&lt;6),\quad c(t)=r(t)\ (t\ge6)\)</span></td><td>原书列为“线性延迟系统”</td></tr>
+<tr><td><span class="math-inline">\(\dot c(t)+a\sqrt{c(t)}=kr(t)\)</span></td><td>非线性系统</td></tr>
+</table></div>
+<aside class="note">校注：上述分段关系实际是从固定时刻开启的线性时变门控；纯延迟应写作 <span class="math-inline">\(c(t)=r(t-6)\)</span>（零初始历史）。保留原书例子并在此说明区别。</aside>
+<h2 id="c1-s7" tabindex="-1">小偏差线性化</h2>
+<p>小偏差法也称切线法，适用于连续可微的非线性特性：在工作点附近的小范围内，用切线近似原非线性曲线。</p>
+<div class="equation">\[f(x_0+\Delta x)\approx f(x_0)+f&#x27;(x_0)\Delta x.\]</div>
+<p>本专题重点是控制系统的组成、信号关系以及线性定常系统的判断。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-2" class="chapter" data-chapter="2" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 02</p><h1>控制系统的数学模型</h1><p class="chapter-meta">专题 2 · 经典控制理论</p></header><h2 id="c2-s1" tabindex="-1">时域模型：微分方程</h2>
+<p>从系统原理图画出方块图，分别列写各元件的方程，消去中间变量，得到输出量和输入量之间的微分方程。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>电气元件</th><th>基本关系</th><th>零初始条件下的复阻抗</th></tr>
+<tr><td>电阻</td><td><span class="math-inline">\(u_R=Ri_R\)</span></td><td><span class="math-inline">\(R\)</span></td></tr>
+<tr><td>电容</td><td><span class="math-inline">\(i_C=C\,du_C/dt\)</span></td><td><span class="math-inline">\(1/(Cs)\)</span></td></tr>
+<tr><td>电感</td><td><span class="math-inline">\(u_L=L\,di_L/dt\)</span></td><td><span class="math-inline">\(Ls\)</span></td></tr>
+</table></div>
+<p>电路建模依据 KCL（节点电流代数和为零）和 KVL（回路电压代数和为零）。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>机械元件</th><th>运动方程</th></tr>
+<tr><td>质量</td><td><span class="math-inline">\(F=m\dot v=m\ddot x\)</span></td></tr>
+<tr><td>弹性</td><td><span class="math-inline">\(F=k(x_1-x_2)\)</span></td></tr>
+<tr><td>阻尼</td><td><span class="math-inline">\(F=f(v_1-v_2)=f(\dot x_1-\dot x_2)\)</span></td></tr>
+<tr><td>转动惯量</td><td><span class="math-inline">\(T=J\dot\Omega=J\ddot\theta\)</span></td></tr>
+</table></div>
+<figure><button class="figure-open" type="button" aria-label="放大：机械系统的基本元件"><img src="assets/crop-27-123-89-531-479.webp" alt="机械系统的基本元件" loading="lazy" decoding="async"></button><figcaption>机械系统的基本元件</figcaption></figure>
+<h2 id="c2-s2" tabindex="-1">拉普拉斯变换与反变换</h2>
+<div class="equation">\[F(s)=\mathcal L[f(t)]=\int_0^\infty f(t)e^{-st}\,dt,\qquad f(t)=\mathcal L^{-1}[F(s)].\]</div>
+<p>变换满足线性性；零初始条件下微分对应乘 <span class="math-inline">\(s\)</span>，积分对应除以 <span class="math-inline">\(s\)</span>。定义本身并不要求初始值为零，零初始条件用于简化微分变换和定义传递函数。</p>
+<h3 id="c2-s3" tabindex="-1">常用定理</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>定理</th><th>公式与条件</th></tr>
+<tr><td>线性性</td><td><span class="math-inline">\(\mathcal L[af+bg]=aF+bG\)</span></td></tr>
+<tr><td>复频移</td><td><span class="math-inline">\(\mathcal L[e^{-at}f(t)]=F(s+a)\)</span></td></tr>
+<tr><td>时间延迟</td><td><span class="math-inline">\(\mathcal L[f(t-\tau)u(t-\tau)]=e^{-\tau s}F(s)\)</span></td></tr>
+<tr><td>初值定理</td><td><span class="math-inline">\(f(0^+)=\lim_{s\to\infty}sF(s)\)</span>（无原点冲激等奇异项）</td></tr>
+<tr><td>终值定理</td><td><span class="math-inline">\(f(\infty)=\lim_{s\to0}sF(s)\)</span>（<span class="math-inline">\(sF(s)\)</span> 的全部极点位于左半平面）</td></tr>
+</table></div>
+<div class="equation">\[\mathcal L[f^{(n)}(t)]=s^nF(s)-s^{n-1}f(0^-)-s^{n-2}\dot f(0^-)-\cdots-f^{(n-1)}(0^-).\]</div>
+<aside class="note">校注：原书微分定理、部分反变换处误排为 <span class="math-inline">\(Z\)</span>，本阅读版统一为 <span class="math-inline">\(\mathcal L\)</span>；补充了终值定理的适用条件和延迟函数的阶跃因子。</aside>
+<p>简单函数查表；复杂有理函数先作部分分式展开。若各极点互异，且分母次数高于分子：</p>
+<div class="equation">\[F(s)=\frac{B(s)}{A(s)}=\sum_{k=1}^n\frac{a_k}{s+p_k}.\]</div>
+<div class="equation">\[a_k=\left[(s+p_k)\frac{B(s)}{A(s)}\right]_{s=-p_k}.\]</div>
+<h3 id="c2-s4" tabindex="-1">典型函数变换表</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>原函数（<span class="math-inline">\(t\ge0\)</span>）</th><th>像函数</th></tr>
+<tr><td><span class="math-inline">\(\delta(t)\)</span></td><td><span class="math-inline">\(1\)</span></td></tr>
+<tr><td><span class="math-inline">\(u(t)\)</span></td><td><span class="math-inline">\(1/s\)</span></td></tr>
+<tr><td><span class="math-inline">\(t\)</span></td><td><span class="math-inline">\(1/s^2\)</span></td></tr>
+<tr><td><span class="math-inline">\(t^2/2\)</span></td><td><span class="math-inline">\(1/s^3\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{at}\)</span></td><td><span class="math-inline">\(1/(s-a)\)</span></td></tr>
+<tr><td><span class="math-inline">\(\sin\omega t\)</span></td><td><span class="math-inline">\(\omega/(s^2+\omega^2)\)</span></td></tr>
+<tr><td><span class="math-inline">\(\cos\omega t\)</span></td><td><span class="math-inline">\(s/(s^2+\omega^2)\)</span></td></tr>
+</table></div>
+<h3 id="c2-s5" tabindex="-1">习题：含常数项的反变换</h3>
+<div class="equation">\[F(s)=\frac{s^2+9s+33}{s^2+6s+34}=1+\frac{3s-1}{(s+3)^2+25}.\]</div>
+<p>先长除，再配方：</p>
+<p><div class="equation">\[F(s)=1+3\frac{s+3}{(s+3)^2+25}-2\frac{5}{(s+3)^2+25}.\]</div> <div class="equation">\[f(t)=\delta(t)+3e^{-3t}\cos5t-2e^{-3t}\sin5t.\]</div></p>
+<h2 id="c2-s6" tabindex="-1">复数域模型：传递函数</h2>
+<p>线性定常系统在零初始条件下，输出的拉氏变换与输入的拉氏变换之比称为传递函数。</p>
+<div class="equation">\[G(s)=\frac{C(s)}{R(s)}=\frac{b_0s^m+b_1s^{m-1}+\cdots+b_m}{a_0s^n+a_1s^{n-1}+\cdots+a_n},\qquad n\ge m.\]</div>
+<p>传递函数由系统结构与参数决定，与输入形式、幅度无关；它描述输入—输出动态关系，不完整反映内部状态。<span class="math-inline">\(G(s)\)</span> 的反变换是单位脉冲响应 <span class="math-inline">\(g(t)\)</span>，因为输入 <span class="math-inline">\(\delta(t)\)</span> 时 <span class="math-inline">\(R(s)=1\)</span>，故 <span class="math-inline">\(C(s)=G(s)\)</span>。</p>
+<aside class="note">校注：原书从含 <span class="math-inline">\(a_0\)</span> 的微分方程写到传递函数时漏写分母首项系数，本式保留 <span class="math-inline">\(a_0\)</span>；若首一化，应同时除以 <span class="math-inline">\(a_0\)</span>。</aside>
+<h3 id="c2-s7" tabindex="-1">两种常用表达式</h3>
+<p>时间常数（尾一）形式：</p>
+<div class="equation">\[G(s)=\frac{Ke^{-\tau s}\prod_i(\tau_i s+1)}{s^\nu\prod_j(T_js+1)\prod_k(T_k^2s^2+2\zeta_kT_ks+1)}.\]</div>
+<p>其中 <span class="math-inline">\(K\)</span> 是开环增益，<span class="math-inline">\(\nu\)</span> 是积分环节数。各因子分别代表比例、延迟、微分、积分、惯性、振荡环节。</p>
+<p>零极点（首一）形式：</p>
+<div class="equation">\[G(s)=K^*\frac{\prod_{i=1}^m(s-z_i)}{\prod_{j=1}^n(s-p_j)}.\]</div>
+<p><span class="math-inline">\(K^*\)</span> 是根轨迹增益。转换形式时，各时间常数提出的系数也要计入，不能直接将 <span class="math-inline">\(K\)</span> 与 <span class="math-inline">\(K^*\)</span> 混用。</p>
+<h3 id="c2-s8" tabindex="-1">典型环节</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>环节</th><th>传递函数</th></tr>
+<tr><td>比例</td><td><span class="math-inline">\(K\)</span></td></tr>
+<tr><td>微分</td><td><span class="math-inline">\(s\)</span></td></tr>
+<tr><td>积分</td><td><span class="math-inline">\(1/s\)</span></td></tr>
+<tr><td>惯性</td><td><span class="math-inline">\(1/(Ts+1),\ T&gt;0\)</span></td></tr>
+<tr><td>一阶微分</td><td><span class="math-inline">\(\tau s+1,\ \tau&gt;0\)</span></td></tr>
+<tr><td>二阶振荡</td><td><span class="math-inline">\(\dfrac1{T^2s^2+2\zeta Ts+1}=\dfrac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2},\ 0\le\zeta&lt;1\)</span></td></tr>
+<tr><td>二阶微分</td><td><span class="math-inline">\(\tau^2s^2+2\zeta\tau s+1\)</span></td></tr>
+<tr><td>一阶不稳定</td><td><span class="math-inline">\(1/(Ts-1),\ T&gt;0\)</span></td></tr>
+<tr><td>一阶不稳定微分</td><td><span class="math-inline">\(\tau s-1,\ \tau&gt;0\)</span></td></tr>
+<tr><td>二阶不稳定</td><td><span class="math-inline">\(1/(T^2s^2+2\zeta Ts+1),\ -1&lt;\zeta&lt;0\)</span></td></tr>
+</table></div>
+<h2 id="c2-s9" tabindex="-1">结构图及等效变换</h2>
+<p>方框表示单向传输函数；比较点将输入信号相加或相减；引出点标记取出同一信号的位置；带箭头的信号线给出信号流向。</p>
+<p>等效变换要求被变换部分输入—输出关系不变。利用串联、并联、反馈和节点移动，将交叉回路化为大环套小环或并列环路。</p>
+<div class="equation">\[G_{\text{串}}=\prod_iG_i,\qquad G_{\text{并}}=\sum_i(\pm G_i).\]</div>
+<p>负反馈：<span class="math-inline">\(G_{\text{闭}}=G/(1+GH)\)</span>；正反馈：<span class="math-inline">\(G_{\text{闭}}=G/(1-GH)\)</span>。</p>
+<p>相邻同类节点可按信号代数关系交换；比较点和引出点不能随意互换。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：比较点跨越方框的等效变换"><img src="assets/crop-35-115-468-552-729.webp" alt="比较点跨越方框的等效变换" loading="lazy" decoding="async"></button><figcaption>比较点跨越方框的等效变换</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：引出点跨越方框、相邻比较点移动"><img src="assets/crop-36-76-83-506-522.webp" alt="引出点跨越方框、相邻比较点移动" loading="lazy" decoding="async"></button><figcaption>引出点跨越方框、相邻比较点移动</figcaption></figure>
+<p>比较点顺信号方向跨过 <span class="math-inline">\(G\)</span>，支路乘 <span class="math-inline">\(G\)</span>；逆方向跨过 <span class="math-inline">\(G\)</span>，支路除以 <span class="math-inline">\(G\)</span>。引出点顺方向跨过 <span class="math-inline">\(G\)</span>，取出支路除以 <span class="math-inline">\(G\)</span>；逆方向跨过 <span class="math-inline">\(G\)</span>，取出支路乘 <span class="math-inline">\(G\)</span>。始终以变换前后信号相同为检验依据。</p>
+<h2 id="c2-s10" tabindex="-1">信号流图与梅森公式</h2>
+<p>信号流图由节点、支路、增益组成，是结构图的简化表达。微分方程先拉氏变换成代数方程，再绘图。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>信号流图</th><th>对应结构图</th></tr>
+<tr><td>源点</td><td>输入变量 <span class="math-inline">\(R(s)\)</span></td></tr>
+<tr><td>阱点</td><td>输出变量 <span class="math-inline">\(C(s)\)</span></td></tr>
+<tr><td>混合节点</td><td>中间变量、比较点、引出点</td></tr>
+<tr><td>支路</td><td>传递函数方框</td></tr>
+<tr><td>增益</td><td>带正负号的传递函数</td></tr>
+</table></div>
+<p><div class="equation">\[\Phi(s)=\frac{\sum_kP_k\Delta_k}{\Delta}.\]</div> <div class="equation">\[\Delta=1-\sum_iL_i+\sum_{i&lt;j\atop\text{互不接触}}L_iL_j-\sum_{i&lt;j&lt;k\atop\text{互不接触}}L_iL_jL_k+\cdots.\]</div></p>
+<p><span class="math-inline">\(P_k\)</span> 是第 <span class="math-inline">\(k\)</span> 条前向通道的增益，<span class="math-inline">\(L_i\)</span> 是单独回路增益，<span class="math-inline">\(\Delta_k\)</span> 是删去与第 <span class="math-inline">\(k\)</span> 条前向通道接触的所有回路后所得余子式。“互不接触”指无公共节点。相同系统对不同输入、输出的梅森行列式相同，分子随通道改变（约分后表观分母可能不同）。</p>
+<h3 id="c2-s11" tabindex="-1">含扰动的闭环传递函数</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：输入与扰动作用的反馈结构"><img src="assets/crop-38-99-477-452-642.webp" alt="输入与扰动作用的反馈结构" loading="lazy" decoding="async"></button><figcaption>输入与扰动作用的反馈结构</figcaption></figure>
+<p>令 <span class="math-inline">\(D=1+G_1G_2H\)</span>。扰动从 <span class="math-inline">\(G_1\)</span> 与 <span class="math-inline">\(G_2\)</span> 之间正向加入，则</p>
+<div class="equation">\[\frac CR=\frac{G_1G_2}{D},\qquad C_R=\frac{G_1G_2}{D}R.\]</div>
+<div class="equation">\[\frac CN=\frac{G_2}{D},\qquad \frac ER=\frac1D,\qquad \frac EN=-\frac{G_2H}{D}.\]</div>
+<p>同时存在给定和扰动时，按叠加原理相加：<span class="math-inline">\(C=C_R+C_N\)</span>。单位负反馈、无扰动时：</p>
+<div class="equation">\[\Phi_e(s)=1-\Phi(s)=1-\frac{G}{1+G}=\frac1{1+G}.\]</div>
+<h3 id="c2-s12" tabindex="-1">习题：由梅森公式求输出和误差</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：习题结构图与信号流图"><img src="assets/crop-40-110-315-453-437.webp" alt="习题结构图与信号流图" loading="lazy" decoding="async"></button><figcaption>习题结构图与信号流图</figcaption></figure>
+<p>三个回路及不接触回路乘积为</p>
+<p><div class="equation">\[L_1=-G_1H_1,\quad L_2=-G_3H_2,\quad L_3=-G_1G_2G_3H_1H_2,\]</div> <div class="equation">\[L_1L_2=G_1G_3H_1H_2.\]</div> <div class="equation">\[\Delta=1+G_1H_1+G_3H_2+G_1G_2G_3H_1H_2+G_1G_3H_1H_2.\]</div></p>
+<p>求 <span class="math-inline">\(C/R\)</span> 时，两条通道为 <span class="math-inline">\(P_1=G_1G_2G_3,\ \Delta_1=1\)</span>；<span class="math-inline">\(P_2=G_3G_4,\ \Delta_2=1+G_1H_1\)</span>。</p>
+<div class="equation">\[\frac CR=\frac{G_1G_2G_3+G_3G_4(1+G_1H_1)}{\Delta}.\]</div>
+<p>求 <span class="math-inline">\(E/R\)</span> 时，两条通道为 <span class="math-inline">\(P_1=1,\ \Delta_1=1+G_3H_2\)</span>；<span class="math-inline">\(P_2=-G_3G_4H_1H_2,\ \Delta_2=1\)</span>。</p>
+<div class="equation">\[\frac ER=\frac{1+G_3H_2-G_3G_4H_1H_2}{\Delta}.\]</div>
+<p>本专题应熟练从微分方程、结构图等效变换和梅森公式三条路径求传递函数。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-3" class="chapter" data-chapter="3" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 03</p><h1>线性系统的时域分析法</h1><p class="chapter-meta">专题 3 · 经典控制理论</p></header><h2 id="c3-s1" tabindex="-1">输入信号和性能指标</h2>
+<p>典型输入为单位阶跃 <span class="math-inline">\(u(t)\leftrightarrow1/s\)</span>、单位斜坡 <span class="math-inline">\(t\leftrightarrow1/s^2\)</span>、单位加速度 <span class="math-inline">\(t^2/2\leftrightarrow1/s^3\)</span>、脉冲 <span class="math-inline">\(\delta(t)\leftrightarrow1\)</span>、正弦 <span class="math-inline">\(A\sin\omega t\leftrightarrow A\omega/(s^2+\omega^2)\)</span> 和余弦 <span class="math-inline">\(A\cos\omega t\leftrightarrow As/(s^2+\omega^2)\)</span>。加速度信号的 <span class="math-inline">\(1/2\)</span> 不可漏掉。</p>
+<p>控制系统主要从稳定性、稳态精度和动态性能三个方面评价。动态性能中的 <span class="math-inline">\(t_r,t_p,t_s\)</span> 衡量快速性，超调量衡量平稳性。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：单位阶跃响应的性能指标"><img src="assets/crop-43-130-96-527-408.webp" alt="单位阶跃响应的性能指标" loading="lazy" decoding="async"></button><figcaption>单位阶跃响应的性能指标</figcaption></figure>
+<ul><li>上升时间 <span class="math-inline">\(t_r\)</span>：由终值的10%升到90%所需时间；振荡系统也常采用从零第一次到终值的时间，使用时应明确口径。</li><li>峰值时间 <span class="math-inline">\(t_p\)</span>：超过终值后到达第一个峰值的时间。</li><li>调节时间 <span class="math-inline">\(t_s\)</span>：进入并始终保持在终值规定误差带（±5%或±2%）内的最短时间。</li><li>超调量：<span class="math-inline">\(\sigma\%=\dfrac{c(t_p)-c(\infty)}{c(\infty)}\times100\%\)</span>（正终值的通常定义）。无超出终值时记为零。</li></ul>
+<h2 id="c3-s2" tabindex="-1">一阶系统</h2>
+<div class="equation">\[T\dot c+c=r,\qquad \Phi(s)=\frac1{Ts+1},\quad T&gt;0.\]</div>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>输入</th><th>零状态响应（<span class="math-inline">\(t\ge0\)</span>）</th></tr>
+<tr><td>单位阶跃</td><td><span class="math-inline">\(1-e^{-t/T}\)</span></td></tr>
+<tr><td>单位脉冲</td><td><span class="math-inline">\(e^{-t/T}/T\)</span></td></tr>
+<tr><td>单位斜坡</td><td><span class="math-inline">\(t-T+Te^{-t/T}\)</span></td></tr>
+<tr><td>单位加速度</td><td><span class="math-inline">\(t^2/2-Tt+T^2(1-e^{-t/T})\)</span></td></tr>
+</table></div>
+<p>阶跃响应单调无超调，<span class="math-inline">\(T\)</span> 越小响应越快。<span class="math-inline">\(t_r\approx2.20T\)</span>；<span class="math-inline">\(t_s\approx3T\)</span>（5%）或 <span class="math-inline">\(4T\)</span>（2%）；不存在峰值时间。</p>
+<h2 id="c3-s3" tabindex="-1">二阶系统</h2>
+<div class="equation">\[\Phi(s)=\frac1{T^2s^2+2\zeta Ts+1}=\frac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2},\qquad \omega_n=1/T.\]</div>
+<p><span class="math-inline">\(\zeta\)</span> 是阻尼比，<span class="math-inline">\(\omega_n\)</span> 是无阻尼自然振荡频率。令分母为零得到特征方程。</p>
+<h3 id="c3-s4" tabindex="-1">欠阻尼：<span class="math-inline">\(0&lt;\zeta&lt;1\)</span></h3>
+<p><div class="equation">\[s_{1,2}=-\zeta\omega_n\pm j\omega_d,\qquad \omega_d=\omega_n\sqrt{1-\zeta^2}.\]</div> <div class="equation">\[c(t)=1-\frac{e^{-\zeta\omega_nt}}{\sqrt{1-\zeta^2}}\sin(\omega_dt+\beta),\qquad \beta=\arccos\zeta.\]</div> <div class="equation">\[t_r=\frac{\pi-\beta}{\omega_d},\qquad t_p=\frac\pi{\omega_d}.\]</div></p>
+<div class="equation">\[\sigma\%=e^{-\pi\zeta/\sqrt{1-\zeta^2}}\times100\%,\qquad t_s\approx\frac{c}{\zeta\omega_n}.\]</div>
+<p>原书说明不同教材近似系数不同：常用 <span class="math-inline">\(c=3\)</span>（5%）、<span class="math-inline">\(4\)</span>（2%），部分教材取3.5和4.4。应遵循题目或参考书口径，近似式不等于精确的最后越界时间。</p>
+<h3 id="c3-s5" tabindex="-1">临界阻尼：<span class="math-inline">\(\zeta=1\)</span></h3>
+<div class="equation">\[s_1=s_2=-\omega_n,\qquad c(t)=1-e^{-\omega_nt}(1+\omega_nt).\]</div>
+<h3 id="c3-s6" tabindex="-1">过阻尼：<span class="math-inline">\(\zeta&gt;1\)</span></h3>
+<div class="equation">\[s_{1,2}=-\zeta\omega_n\pm\omega_n\sqrt{\zeta^2-1},\qquad c(t)=1+A_1e^{s_1t}+A_2e^{s_2t}.\]</div>
+<h3 id="c3-s7" tabindex="-1">极点分布与响应</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>阻尼比</th><th>极点与响应</th></tr>
+<tr><td><span class="math-inline">\(\zeta&lt;-1\)</span></td><td>两个右半平面实极点，发散，不稳定</td></tr>
+<tr><td><span class="math-inline">\(-1&lt;\zeta&lt;0\)</span></td><td>右半平面共轭极点，增幅振荡，不稳定</td></tr>
+<tr><td><span class="math-inline">\(\zeta=0\)</span></td><td><span class="math-inline">\(\pm j\omega_n\)</span>，等幅振荡，临界稳定（不渐近稳定）</td></tr>
+<tr><td><span class="math-inline">\(0&lt;\zeta&lt;1\)</span></td><td>左半平面共轭极点，衰减振荡，有超调</td></tr>
+<tr><td><span class="math-inline">\(\zeta=1\)</span></td><td>重极点 <span class="math-inline">\(-\omega_n\)</span>，无超调</td></tr>
+<tr><td><span class="math-inline">\(\zeta&gt;1\)</span></td><td>两个左半平面实极点，无超调</td></tr>
+</table></div>
+<aside class="note">校注：原书表格将欠阻尼响应写为“无超调”，应为“有超调”；这里按标准二阶阶跃响应纠正。<span class="math-inline">\(\zeta=-1\)</span> 同样不稳定。</aside>
+<h2 id="c3-s8" tabindex="-1">比例微分、测速反馈与高阶近似</h2>
+<p>在原书所讨论的典型二阶结构中，比例微分控制可增加阻尼，降低超调，缩短调节时间，不改变自然频率和低频增益；允许提高开环增益时还能改善稳态精度。但微分会放大高频噪声，强噪声场合不宜直接使用理想微分。</p>
+<p>测速反馈可改善动态性能，但在常见结构下会增大稳态误差，通常需配合提高前向增益。这些结论取决于具体结构，应从闭环传递函数核验。</p>
+<p>主导极点是靠近虚轴、附近没有零点削弱作用，且其余极点到虚轴距离远大于它（常用5倍以上作近似判断）的极点或极点对。忽略远处极点可近似为一阶或二阶系统，但必须保持低频总增益。</p>
+<h2 id="c3-s9" tabindex="-1">稳定性与劳斯判据</h2>
+<p>扰动消失后，系统从初始偏差恢复原平衡状态的能力称为稳定性。连续线性定常系统渐近稳定的充要条件是全部特征根实部为负。</p>
+<p>对 <span class="math-inline">\(D(s)=a_0s^n+a_1s^{n-1}+\cdots+a_n,\ a_0&gt;0\)</span>，构造 <span class="math-inline">\(n+1\)</span> 行劳斯表：</p>
+<p><div class="equation">\[\begin{array}{c|cccc}
+s^n&amp;a_0&amp;a_2&amp;a_4&amp;\cdots\\
+s^{n-1}&amp;a_1&amp;a_3&amp;a_5&amp;\cdots\\
+s^{n-2}&amp;b_1&amp;b_2&amp;b_3&amp;\cdots\\
+s^{n-3}&amp;c_1&amp;c_2&amp;c_3&amp;\cdots
+\end{array}\]</div> <div class="equation">\[b_k=\frac{a_1a_{2k}-a_0a_{2k+1}}{a_1},\qquad c_k=\frac{b_1a_{2k+1}-a_1b_{k+1}}{b_1}.\]</div></p>
+<p>首列全部为正，则系统稳定；首列符号变化次数等于右半平面根数。</p>
+<ul><li>某行首元素为零但不全零：用 <span class="math-inline">\(\varepsilon&gt;0\)</span> 代替，继续计算后令 <span class="math-inline">\(\varepsilon\to0^+\)</span>；也可对 <span class="math-inline">\((s+1)D(s)\)</span> 列表，新增的左半平面根不改变右半平面根数。</li><li>出现全零行：以上一行构成辅助多项式 <span class="math-inline">\(F(s)\)</span>，用 <span class="math-inline">\(F&#x27;(s)\)</span> 的系数代替零行继续计算，并求辅助多项式的根。</li><li>要判断 <span class="math-inline">\(s=-a\)</span> 右侧是否有根，令 <span class="math-inline">\(s=z-a\)</span> 后对 <span class="math-inline">\(z\)</span> 列劳斯表。</li></ul>
+<aside class="note">校注：全零行表示存在关于原点对称的根，不能笼统等同于“必有纯虚根”；须结合辅助多项式判断。临界稳定还要求虚轴根单根、其余根在左半平面。</aside>
+<h3 id="c3-s10" tabindex="-1">习题：劳斯表出现全零行</h3>
+<div class="equation">\[D(s)=s^6+s^5-2s^4-3s^3-7s^2-4s-4.\]</div>
+<p>前3行分别为 <span class="math-inline">\((1,-2,-7,-4)\)</span>、<span class="math-inline">\((1,-3,-4,0)\)</span>、<span class="math-inline">\((1,-3,-4,0)\)</span>，下一行为全零。</p>
+<p>构造 <span class="math-inline">\(F(s)=s^4-3s^2-4\)</span>，用 <span class="math-inline">\(F&#x27;(s)=4s^3-6s\)</span> 替代零行：</p>
+<div class="equation">\[\begin{array}{c|rrrr}
+s^6&amp;1&amp;-2&amp;-7&amp;-4\\
+s^5&amp;1&amp;-3&amp;-4&amp;0\\
+s^4&amp;1&amp;-3&amp;-4&amp;0\\
+s^3&amp;4&amp;-6&amp;0&amp;0\\
+s^2&amp;-3/2&amp;-4&amp;0&amp;0\\
+s^1&amp;-50/3&amp;0&amp;0&amp;0\\
+s^0&amp;-4&amp;0&amp;0&amp;0
+\end{array}\]</div>
+<p>首列一次变号，有一个右半平面根，系统不稳定。全部根为 <span class="math-inline">\(\pm2,\ \pm j,\ (-1\pm j\sqrt3)/2\)</span>。</p>
+<h2 id="c3-s11" tabindex="-1">稳态误差</h2>
+<p>输入端定义的偏差为 <span class="math-inline">\(E=R-HC\)</span>。终值存在且满足终值定理时：</p>
+<div class="equation">\[e_{ss}=\lim_{s\to0}sE(s)=\lim_{s\to0}\frac{sR(s)}{1+G(s)H(s)}.\]</div>
+<p>同时有给定和扰动时，必须计算两部分：<span class="math-inline">\(e_{ss}=e_{ss,r}+e_{ss,d}\)</span>。开环 <span class="math-inline">\(GH\)</span> 中纯积分环节数 <span class="math-inline">\(\nu\)</span> 称为系统型别。</p>
+<div class="equation">\[K_p=\lim_{s\to0}GH,\quad K_v=\lim_{s\to0}sGH,\quad K_a=\lim_{s\to0}s^2GH.\]</div>
+<p>对幅值为 <span class="math-inline">\(R\)</span> 的阶跃、斜坡 <span class="math-inline">\(Rt\)</span>、加速度 <span class="math-inline">\(Rt^2/2\)</span>，稳态误差分别为 <span class="math-inline">\(R/(1+K_p)\)</span>、<span class="math-inline">\(R/K_v\)</span>、<span class="math-inline">\(R/K_a\)</span>。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>型别</th><th><span class="math-inline">\(K_p,K_v,K_a\)</span></th><th>阶跃</th><th>斜坡</th><th>加速度</th></tr>
+<tr><td>0型</td><td><span class="math-inline">\(K,0,0\)</span></td><td><span class="math-inline">\(R/(1+K)\)</span></td><td><span class="math-inline">\(\infty\)</span></td><td><span class="math-inline">\(\infty\)</span></td></tr>
+<tr><td>I型</td><td><span class="math-inline">\(\infty,K,0\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(R/K\)</span></td><td><span class="math-inline">\(\infty\)</span></td></tr>
+<tr><td>II型</td><td><span class="math-inline">\(\infty,\infty,K\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(R/K\)</span></td></tr>
+<tr><td>III型</td><td><span class="math-inline">\(\infty,\infty,\infty\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td></tr>
+</table></div>
+<p>适用前提：闭环稳定；误差按输入端定义；输入为上述典型输入，且没有额外前馈通道改变误差关系。</p>
+<h3 id="c3-s12" tabindex="-1">动态误差与扰动误差</h3>
+<p>原书只提示动态误差可将误差传递关系在原点展开为泰勒级数，详细推导不在本册展开。</p>
+<p>若扰动正向加在 <span class="math-inline">\(G_1,G_2\)</span> 之间，则</p>
+<div class="equation">\[E_d(s)=-\frac{G_2H}{1+G_1G_2H}N(s),\qquad e_{ss,d}=\lim_{s\to0}sE_d(s).\]</div>
+<p>减少稳态误差的措施：提高开环增益或扰动作用点之前的前向增益；在适当通道串入积分环节；采用串级控制抑制内回路扰动；采用复合控制。措施均须兼顾闭环稳定性。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-4" class="chapter" data-chapter="4" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 04</p><h1>线性系统的根轨迹法</h1><p class="chapter-meta">专题 4 · 经典控制理论</p></header><h2 id="c4-s1" tabindex="-1">基本概念与根轨迹方程</h2>
+<p>系统参数（通常为根轨迹增益 <span class="math-inline">\(K^*\)</span>）从零变化到无穷时，闭环特征根在复平面上移动的轨迹称为根轨迹。任务是由开环零极点确定闭环极点随参数变化的轨迹。</p>
+<p>闭环根轨迹增益等于前向通路的根轨迹增益；闭环零点通常由前向通路零点和反馈通路极点组成（须注意约消）；闭环极点则由全部开环零极点和增益共同决定。单位反馈时，未约消的闭环零点就是开环零点。</p>
+<div class="equation">\[1+G(s)H(s)=0,\qquad K^*\frac{\prod_{j=1}^m(s-z_j)}{\prod_{i=1}^n(s-p_i)}=-1.\]</div>
+<div class="equation">\[K^*=\frac{\prod_i\lvert s-p_i\rvert}{\prod_j\lvert s-z_j\rvert},\qquad \sum_j\arg(s-z_j)-\sum_i\arg(s-p_i)=(2k+1)\pi.\]</div>
+<p>对正增益常规根轨迹，先用相角条件判断点是否在轨迹上，再用幅值条件求该点对应增益。</p>
+<h2 id="c4-s2" tabindex="-1">绘制法则</h2>
+<ol><li><strong>起终点</strong>：从开环极点出发，终止于开环零点；不足的有限零点由无穷远零点补足。</li><li><strong>分支与对称性</strong>：分支数通常等于 <span class="math-inline">\(n\)</span>（<span class="math-inline">\(n\ge m\)</span>），关于实轴对称，随参数连续变化。</li><li><strong>渐近线</strong>（<span class="math-inline">\(n&gt;m\)</span>）：</li></ol>
+<div class="equation">\[\sigma_a=\frac{\sum_i p_i-\sum_jz_j}{n-m},\qquad \theta_a=\frac{(2k+1)\pi}{n-m}.\]</div>
+<ol><li><strong>实轴段</strong>：某实轴点右侧实开环零、极点总数为奇数时，该点位于常规根轨迹上。</li><li><strong>分离与汇合</strong>：候选点满足</li></ol>
+<div class="equation">\[\sum_j\frac1{d-z_j}=\sum_i\frac1{d-p_i},\qquad\text{或}\quad \frac{dK^*(s)}{ds}=0.\]</div>
+<p>解出后必须检验相角条件及 <span class="math-inline">\(K^*\ge0\)</span>，排除不属于所求轨迹的点。简单两分支在实轴分离时通常垂直离开；高重数点需按局部角度判断，不能一概说垂直。</p>
+<ol><li><strong>起始角与终止角</strong>（简单零、极点）：</li></ol>
+<p><div class="equation">\[\theta_{p_i}=\pi+\sum_j\arg(p_i-z_j)-\sum_{k\ne i}\arg(p_i-p_k)\pmod{2\pi}.\]</div> <div class="equation">\[\theta_{z_i}=\pi-\sum_{j\ne i}\arg(z_i-z_j)+\sum_k\arg(z_i-p_k)\pmod{2\pi}.\]</div></p>
+<ol><li><strong>虚轴交点</strong>：代 <span class="math-inline">\(s=j\omega\)</span> 入特征方程，令实部、虚部分别为零；或列劳斯表确定临界增益，再解辅助方程。</li></ol>
+<ol><li><strong>根之和</strong>：当 <span class="math-inline">\(n-m\ge2\)</span>、首项系数不随增益变化时，闭环根之和等于开环极点之和。</li></ol>
+<aside class="note">校注：原书“根之和”未列适用条件；<span class="math-inline">\(n-m=1\)</span> 时特征多项式次高项含增益，根之和通常会改变。</aside>
+<h3 id="c4-s3" tabindex="-1">习题一：常规根轨迹</h3>
+<div class="equation">\[G(s)=\frac{K^*(s+1)}{s(s+2)(s+3)},\qquad H=1.\]</div>
+<p>实轴段为 <span class="math-inline">\([-3,-2]\)</span>、<span class="math-inline">\([-1,0]\)</span>。3条分支，一条从0到−1；另外两条从−2、−3出发去无穷远，关于实轴对称。</p>
+<p>两条渐近线交点 <span class="math-inline">\(\sigma_a=[(0-2-3)-(-1)]/2=-2\)</span>，夹角为90°、270°。</p>
+<div class="equation">\[\frac1{d+1}=\frac1d+\frac1{d+2}+\frac1{d+3}.\]</div>
+<p>有效实分离点约为 <span class="math-inline">\(d=-2.47\)</span>；其余共轭候选值不属于本题正增益轨迹。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：常规根轨迹习题"><img src="assets/crop-59-238-291-430-467.webp" alt="常规根轨迹习题" loading="lazy" decoding="async"></button><figcaption>常规根轨迹习题</figcaption></figure>
+<div class="equation">\[D(s)=s^3+5s^2+(K^*+6)s+K^*.\]</div>
+<p>代 <span class="math-inline">\(s=j\omega\)</span>，得 <span class="math-inline">\(K^*-5\omega^2=0\)</span>，<span class="math-inline">\(\omega(K^*+6-\omega^2)=0\)</span>。正增益下没有非零虚轴交点（<span class="math-inline">\(K^*=0\)</span> 的起点在原点）。</p>
+<h2 id="c4-s4" tabindex="-1">广义根轨迹</h2>
+<h3 id="c4-s5" tabindex="-1">参数根轨迹</h3>
+<p>若变化参数不是增益，先写特征方程为 <span class="math-inline">\(A(s)+\lambda B(s)=0\)</span>，除以 <span class="math-inline">\(A(s)\)</span>，改写成 <span class="math-inline">\(1+\lambda B(s)/A(s)=0\)</span>，即可把 <span class="math-inline">\(\lambda\)</span> 当成等效增益绘图。</p>
+<p>习题：<span class="math-inline">\(G(s)=20/[(s+4)(s+b)]\)</span>，单位负反馈，<span class="math-inline">\(b:0\to\infty\)</span>。</p>
+<p><div class="equation">\[D(s)=(s+4)(s+b)+20=s^2+4s+20+b(s+4).\]</div> <div class="equation">\[G_{\rm eq}(s)=\frac{b(s+4)}{s^2+4s+20}=\frac{b(s+4)}{(s+2+j4)(s+2-j4)}.\]</div></p>
+<p>两分支始于 <span class="math-inline">\(-2\pm j4\)</span>，终点为−4与无穷远。实轴段为 <span class="math-inline">\((-\infty,-4]\)</span>。</p>
+<div class="equation">\[\frac1{d+2+j4}+\frac1{d+2-j4}=\frac1{d+4}\ \Longrightarrow\ d^2+8d-4=0.\]</div>
+<p>有效汇合点 <span class="math-inline">\(d=-4-\sqrt{20}\approx-8.47\)</span>；另一候选值0.47舍去。上半平面出射角约153.43°，下半平面对称。曲线是以−4为圆心、<span class="math-inline">\(\sqrt{20}\)</span> 为半径的圆的一部分。汇合时 <span class="math-inline">\(b=4+2\sqrt{20}\approx12.94\)</span>。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：参数根轨迹习题"><img src="assets/crop-61-146-540-498-777.webp" alt="参数根轨迹习题" loading="lazy" decoding="async"></button><figcaption>参数根轨迹习题</figcaption></figure>
+<h3 id="c4-s6" tabindex="-1">零度根轨迹</h3>
+<p>正反馈满足 <span class="math-inline">\(1-GH=0\)</span>，或将负增益的负反馈根轨迹改写成正参数问题时，相角条件为</p>
+<div class="equation">\[\sum_j\arg(s-z_j)-\sum_i\arg(s-p_i)=2k\pi.\]</div>
+<p>幅值条件不变；实轴点右侧实零极点总数为偶数时属于轨迹；渐近线夹角为 <span class="math-inline">\(2k\pi/(n-m)\)</span>。</p>
+<p>简单极点出射角、零点入射角分别变为</p>
+<p><div class="equation">\[\theta_{p_i}=\sum_j\arg(p_i-z_j)-\sum_{k\ne i}\arg(p_i-p_k)\pmod{2\pi},\]</div> <div class="equation">\[\theta_{z_i}=-\sum_{j\ne i}\arg(z_i-z_j)+\sum_k\arg(z_i-p_k)\pmod{2\pi}.\]</div></p>
+<p>其余绘制思路与常规根轨迹相同；凡涉及相角的规则都要从零度条件重新核验。</p>
+<h2 id="c4-s7" tabindex="-1">由零极点分析性能</h2>
+<div class="equation">\[s_{1,2}=-\sigma\pm j\omega_d,\qquad \sigma=\zeta\omega_n,\quad\omega_d=\omega_n\sqrt{1-\zeta^2}.\]</div>
+<ul><li>全部特征根在左半平面才渐近稳定；虚轴单根对应临界情形，虚轴重根可导致不稳定。</li><li>无零点、稳定实极点组成的标准低通串联系统，阶跃响应单调；共轭极点引入振荡模态。</li><li>标准欠阻尼二阶系统的超调随阻尼比增加而减小，调节时间主要由主导极点到虚轴的距离决定。</li><li>在常见低阶系统中，左半平面实零点常使峰值提前、超调增大；额外实极点常使响应变慢。须结合位置及残值判断，不能当成所有系统的定理。</li><li>近似零极点对（偶极子）若远离主导动态区域可忽略；靠近原点时应保留其影响。降阶必须保持增益。</li></ul>
+<p>增加合适的开环零点通常使根轨迹向左弯曲，提高稳定性和快速性；增加开环极点通常使轨迹向右弯曲，极点越靠近原点影响越明显。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：增加开环零极点对根轨迹的影响"><img src="assets/crop-65-127-118-504-262.webp" alt="增加开环零极点对根轨迹的影响" loading="lazy" decoding="async"></button><figcaption>增加开环零极点对根轨迹的影响</figcaption></figure>
+<p>本专题应掌握幅值、相角条件，常规、参数和零度根轨迹的绘制，以及由轨迹判断性能的方法。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-5" class="chapter" data-chapter="5" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 05</p><h1>线性系统的频域分析法</h1><p class="chapter-meta">专题 5 · 经典控制理论</p></header><h2 id="c5-s1" tabindex="-1">频率特性及表示</h2>
+<p>线性定常系统在正弦输入作用下，稳态同频输出与输入的复数比称为频率特性：</p>
+<div class="equation">\[G(j\omega)=A(\omega)e^{j\varphi(\omega)}.\]</div>
+<p><span class="math-inline">\(A\)</span> 是幅值之比，<span class="math-inline">\(\varphi\)</span> 是输出相位减输入相位。频率从零到无穷变化时，<span class="math-inline">\(G(j\omega)\)</span> 端点在复平面上的轨迹为奈奎斯特图。伯德图用对数频率轴分别表示</p>
+<div class="equation">\[L(\omega)=20\log_{10}\lvert G(j\omega)\rvert\quad(\mathrm{dB}),\qquad \varphi(\omega)=\arg G(j\omega).\]</div>
+<p>相位需按象限和连续展开求取，不能只用主值 <span class="math-inline">\(\arctan(\operatorname{Im}G/\operatorname{Re}G)\)</span>。</p>
+<p>对数轴上每十倍频程称为1 dec，斜率为 <span class="math-inline">\(\Delta L/\log_{10}(\omega_2/\omega_1)\)</span>。渐近幅频曲线可用折线近似，相频曲线不能直接当成折线。</p>
+<h2 id="c5-s2" tabindex="-1">典型环节频率特性</h2>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>环节</th><th>幅值</th><th>相位（<span class="math-inline">\(K,T&gt;0\)</span>）</th></tr>
+<tr><td>比例 <span class="math-inline">\(K\)</span></td><td><span class="math-inline">\(K\)</span></td><td><span class="math-inline">\(0\)</span></td></tr>
+<tr><td>积分 <span class="math-inline">\(1/s\)</span></td><td><span class="math-inline">\(1/\omega\)</span></td><td><span class="math-inline">\(-90^\circ\)</span></td></tr>
+<tr><td>微分 <span class="math-inline">\(s\)</span></td><td><span class="math-inline">\(\omega\)</span></td><td><span class="math-inline">\(90^\circ\)</span></td></tr>
+<tr><td>惯性 <span class="math-inline">\(1/(Ts+1)\)</span></td><td><span class="math-inline">\(1/\sqrt{1+\omega^2T^2}\)</span></td><td><span class="math-inline">\(-\arctan\omega T\)</span></td></tr>
+<tr><td>一阶微分 <span class="math-inline">\(Ts+1\)</span></td><td><span class="math-inline">\(\sqrt{1+\omega^2T^2}\)</span></td><td><span class="math-inline">\(\arctan\omega T\)</span></td></tr>
+<tr><td>振荡 <span class="math-inline">\(1/(T^2s^2+2\zeta Ts+1)\)</span></td><td><span class="math-inline">\(1/\sqrt{(1-T^2\omega^2)^2+4\zeta^2T^2\omega^2}\)</span></td><td><span class="math-inline">\(-\arg(1-T^2\omega^2+j2\zeta T\omega)\)</span></td></tr>
+<tr><td>延迟 <span class="math-inline">\(e^{-\tau s}\)</span></td><td><span class="math-inline">\(1\)</span></td><td><span class="math-inline">\(-\tau\omega\)</span> rad，即 <span class="math-inline">\(-57.3\tau\omega\)</span> 度</td></tr>
+</table></div>
+<h2 id="c5-s3" tabindex="-1">奈氏图画法</h2>
+<ol><li>求 <span class="math-inline">\(\omega\to0^+\)</span> 的起点（含积分时可能在无穷远），以及 <span class="math-inline">\(\omega\to\infty\)</span> 的终点和方向。</li></ol>
+<ol><li>求实轴交点：令 <span class="math-inline">\(\operatorname{Im}[G(j\omega)H(j\omega)]=0\)</span>，再求实部及符号。负实轴交点应写为 <span class="math-inline">\((\operatorname{Re}GH,0)\)</span>，其幅值为该实部的绝对值。</li><li>分析相角变化、所在象限及幅值变化，必要时求实部、虚部极限确定渐近线。无延迟的正增益最小相位有理系统，高频相位为 <span class="math-inline">\(-90^\circ(n-m)\)</span>。</li></ol>
+<p>存在原点积分极点时，需按所采用的奈氏路径在原点绕行，并将对应辅助弧映射补全。原书正频率半图方法中，按 <span class="math-inline">\(\nu\times90^\circ\)</span> 的辅助弧处理；不能漏算辅助弧的穿越。</p>
+<h3 id="c5-s4" tabindex="-1">非最小相位相角例题</h3>
+<div class="equation">\[W(s)=\frac K{s(Ts-1)},\qquad K,T&gt;0.\]</div>
+<p>因为 <span class="math-inline">\(-1+jT\omega\)</span> 在第二象限，其相角为 <span class="math-inline">\(180^\circ-\arctan T\omega\)</span>，故连续相角可取</p>
+<div class="equation">\[\varphi(\omega)=-270^\circ+\arctan T\omega.\]</div>
+<h3 id="c5-s5" tabindex="-1">伯德图画法</h3>
+<p>先化尾一标准型，按大小列转折频率；基准低频线斜率为 <span class="math-inline">\(-20\nu\)</span> dB/dec；每经过一阶极点斜率减少20，一阶零点增加20，二阶极点减少40，二阶零点增加40；相角按各环节叠加。</p>
+<p>例：</p>
+<div class="equation">\[G(s)=\frac{40(s+0.5)}{s(s+0.2)(s^2+s+1)}=\frac{100(s/0.5+1)}{s(s/0.2+1)(s^2+s+1)}.\]</div>
+<p>转折频率0.2、0.5、1 rad/s；初始斜率−20 dB/dec，依次变为−40、−20、−60。低频基准线延长到 <span class="math-inline">\(\omega=1\)</span> 时为40 dB（此点不代表真实 <span class="math-inline">\(L(1)\)</span>）。</p>
+<h2 id="c5-s6" tabindex="-1">频域稳定判据</h2>
+<p>令 <span class="math-inline">\(P\)</span> 为开环右半平面极点数，<span class="math-inline">\(Z\)</span> 为闭环右半平面特征根数。采用完整奈氏曲线、逆时针包围−1为正的计数 <span class="math-inline">\(N_{\rm full}\)</span>：</p>
+<div class="equation">\[Z=P-N_{\rm full}.\]</div>
+<p>原书采用正频率半图的穿越计数 <span class="math-inline">\(N=N_+-N_-\)</span>，对应 <span class="math-inline">\(Z=P-2N\)</span>：在−1左侧的负实轴上，自上向下穿越记正，自下向上记负；端点落在该射线上时按半次处理，并计入辅助弧。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：奈氏曲线的正穿越、负穿越与半次穿越"><img src="assets/crop-72-41-529-490-651.webp" alt="奈氏曲线的正穿越、负穿越与半次穿越" loading="lazy" decoding="async"></button><figcaption>奈氏曲线的正穿越、负穿越与半次穿越</figcaption></figure>
+<p>闭环稳定要求 <span class="math-inline">\(Z=0\)</span> 且没有虚轴特征根。开环稳定时完整曲线不得包围−1；开环有 <span class="math-inline">\(P\)</span> 个右半平面极点时，完整曲线应逆时针包围−1共 <span class="math-inline">\(P\)</span> 次。原书半图计数则为 <span class="math-inline">\(P/2\)</span>。</p>
+<aside class="note">校注：完整曲线包围次数与正频率半图穿越次数不能混用；原书部分文字将两者统称“圈数”，这里分别定义。</aside>
+<p>对数稳定判据与奈氏判据本质相同。在 <span class="math-inline">\(L(\omega)&gt;0\)</span> 的频段，统计相频曲线穿越 <span class="math-inline">\((2k+1)\pi\)</span> 线的次数，仍须满足相同的 <span class="math-inline">\(Z=P-2N=0\)</span> 计数关系，并排除临界交点。</p>
+<h2 id="c5-s7" tabindex="-1">稳定裕度</h2>
+<p>幅值截止频率 <span class="math-inline">\(\omega_c\)</span> 满足 <span class="math-inline">\(A(\omega_c)=1\)</span>，即 <span class="math-inline">\(L(\omega_c)=0\)</span>。相位穿越频率 <span class="math-inline">\(\omega_x\)</span> 满足相角为 <span class="math-inline">\(-180^\circ\)</span>（或同余的奇数倍180°）。</p>
+<div class="equation">\[\gamma=180^\circ+\varphi(\omega_c).\]</div>
+<p>相角裕度表示在当前闭环稳定且相应交点适用时，增加多少相位滞后会到达临界状态。</p>
+<div class="equation">\[K_g=\frac1{\lvert G(j\omega_x)H(j\omega_x)\rvert},\qquad h=20\log_{10}K_g=-L(\omega_x).\]</div>
+<p>幅值裕度用倍数 <span class="math-inline">\(K_g\)</span> 或分贝 <span class="math-inline">\(h\)</span> 表示；增加 <span class="math-inline">\(h\)</span> dB 对应乘 <span class="math-inline">\(K_g\)</span> 倍，不能说“增加 <span class="math-inline">\(h\)</span> 倍”。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：相角裕度与幅值裕度的图示"><img src="assets/crop-74-79-357-479-615.webp" alt="相角裕度与幅值裕度的图示" loading="lazy" decoding="async"></button><figcaption>相角裕度与幅值裕度的图示</figcaption></figure>
+<p>在常见开环稳定、单一交越的情形，<span class="math-inline">\(\gamma&gt;0,K_g&gt;1\)</span> 表示有正裕度；为零裕度时临界；负裕度一般对应不稳定。多交越、开环不稳定等情形必须用完整奈氏判据。</p>
+<aside class="note">校注：裕度也可对非最小相位系统定义，原书“只适用于最小相位系统”过于绝对；不能仅凭一组裕度符号判所有系统稳定。</aside>
+<p>原书将右半平面含零点或极点的系统称为非最小相位。严格使用时，还应留意稳定性、纯延迟和全通因子对定义的影响。</p>
+<h2 id="c5-s8" tabindex="-1">典型二阶闭环频域指标</h2>
+<p>对 <span class="math-inline">\(\Phi(s)=\omega_n^2/(s^2+2\zeta\omega_ns+\omega_n^2)\)</span>，相应单位反馈开环的幅值截止频率为</p>
+<div class="equation">\[\omega_c=\omega_n\sqrt{\sqrt{1+4\zeta^4}-2\zeta^2}.\]</div>
+<p>闭环−3 dB带宽：</p>
+<div class="equation">\[\omega_b=\omega_n\sqrt{1-2\zeta^2+\sqrt{2-4\zeta^2+4\zeta^4}}.\]</div>
+<p>谐振频率和谐振峰值：</p>
+<div class="equation">\[\omega_r=\omega_n\sqrt{1-2\zeta^2},\qquad M_r=\frac1{2\zeta\sqrt{1-\zeta^2}},\quad0&lt;\zeta&lt;1/\sqrt2.\]</div>
+<p>当 <span class="math-inline">\(\zeta\ge1/\sqrt2\)</span> 时，没有非零频率的谐振峰。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-6" class="chapter" data-chapter="6" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 06</p><h1>线性系统的校正方法</h1><p class="chapter-meta">专题 6 · 经典控制理论</p></header><h2 id="c6-s1" tabindex="-1">校正方式</h2>
+<ul><li>串联校正：校正装置接入前向通道，通常放在能量较低处，便于变换信号，需注意负载效应。常用超前、滞后、滞后—超前校正。</li><li>反馈校正：信号从高功率点向低功率点反馈，可抑制参数波动及部分非线性影响，元件数往往较少。</li><li>前馈校正：对给定信号预处理，或测量扰动后经补偿通道抵消其影响。</li></ul>
+<ul><li>复合校正：在反馈系统中加入前馈通道，包括按扰动补偿、按给定补偿。</li></ul>
+<figure><button class="figure-open" type="button" aria-label="放大：按扰动与按输入补偿的复合校正结构"><img src="assets/crop-78-121-216-445-496.webp" alt="按扰动与按输入补偿的复合校正结构" loading="lazy" decoding="async"></button><figcaption>按扰动与按输入补偿的复合校正结构</figcaption></figure>
+<h2 id="c6-s2" tabindex="-1">基本控制规律</h2>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>控制器</th><th>控制规律与传递函数</th></tr>
+<tr><td>P</td><td><span class="math-inline">\(m=K_pe,\quad G_c=K_p\)</span></td></tr>
+<tr><td>PD</td><td><span class="math-inline">\(m=K_pe+K_p\tau\dot e,\quad G_c=K_p(1+\tau s)\)</span></td></tr>
+<tr><td>I</td><td><span class="math-inline">\(m=K_I\int_0^t e(\tau)d\tau,\quad G_c=K_I/s\)</span></td></tr>
+<tr><td>PI</td><td><span class="math-inline">\(m=K_pe+(K_p/T_I)\int_0^t e(\tau)d\tau,\quad G_c=K_p(1+1/(T_Is))\)</span></td></tr>
+<tr><td>PID</td><td><span class="math-inline">\(m=K_pe+(K_p/T_I)\int_0^t e(\tau)d\tau+K_p\tau_D\dot e,\quad G_c=K_p+K_I/s+K_Ds\)</span></td></tr>
+</table></div>
+<p>P改变幅值而不改变相位。PD反映变化趋势，提供提前修正、增加一个左半平面零点；I增加原点极点、提高型别，但引入90°滞后；PI兼顾增益与积分，有利于减小稳态误差。PID将积分作用安排在低频、微分作用安排在中频，兼顾精度与动态性能。</p>
+<aside class="note">校注：PID分子有两个零点，但并非任意正参数下都是“两个负实零点”；<span class="math-inline">\(K_p^2\ge4K_DK_I\)</span> 时才为实零点。控制器作用应结合参数与对象核验。</aside>
+<h2 id="c6-s3" tabindex="-1">无源校正网络</h2>
+<h3 id="c6-s4" tabindex="-1">超前网络</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：无源超前网络"><img src="assets/crop-80-205-561-352-684.webp" alt="无源超前网络" loading="lazy" decoding="async"></button><figcaption>无源超前网络</figcaption></figure>
+<p>原无源网络低频有衰减，补偿其增益后可写成</p>
+<div class="equation">\[aG_c(s)=\frac{1+aTs}{1+Ts},\qquad a=\frac{R_1+R_2}{R_2}&gt;1,\quad T=\frac{R_1R_2}{R_1+R_2}C.\]</div>
+<p>相位超前可提高相角裕度和截止频率、改善动态响应；无源网络使低频增益下降 <span class="math-inline">\(a\)</span> 倍，应配合放大器补偿。高频噪声较强时不宜过度使用超前校正。</p>
+<div class="equation">\[\omega_m=\frac1{T\sqrt a},\qquad \sin\varphi_m=\frac{a-1}{a+1},\qquad L_c(\omega_m)=10\log_{10}a.\]</div>
+<h3 id="c6-s5" tabindex="-1">滞后网络</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：无源滞后网络"><img src="assets/crop-82-224-115-344-227.webp" alt="无源滞后网络" loading="lazy" decoding="async"></button><figcaption>无源滞后网络</figcaption></figure>
+<div class="equation">\[G_c(s)=\frac{1+bTs}{1+Ts},\qquad b=\frac{R_2}{R_1+R_2}&lt;1,\quad T=(R_1+R_2)C.\]</div>
+<p>利用高频衰减降低开环截止频率，以获得较大相角裕度；低频增益基本不变，并削弱高频噪声。<span class="math-inline">\(b\)</span> 越小，高频衰减越强。</p>
+<h3 id="c6-s6" tabindex="-1">滞后—超前网络</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：无源滞后—超前网络"><img src="assets/crop-83-229-124-373-256.webp" alt="无源滞后—超前网络" loading="lazy" decoding="async"></button><figcaption>无源滞后—超前网络</figcaption></figure>
+<div class="equation">\[G_c(s)=\frac{(1+T_as)(1+T_bs)}{(1+\alpha T_as)(1+T_bs/\alpha)},\qquad\alpha&gt;1.\]</div>
+<p>在一定频段产生衰减，低频部分改善稳态性能，中频超前部分改善动态性能。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：滞后—超前网络幅频渐近线"><img src="assets/crop-83-111-418-472-613.webp" alt="滞后—超前网络幅频渐近线" loading="lazy" decoding="async"></button><figcaption>滞后—超前网络幅频渐近线</figcaption></figure>
+<h2 id="c6-s7" tabindex="-1">串联校正设计</h2>
+<h3 id="c6-s8" tabindex="-1">超前校正</h3>
+<ol><li>依据稳态误差确定开环增益，计算未校正系统裕度。</li><li>选择期望截止频率 <span class="math-inline">\(\omega_c&#x27;\)</span>，将最大超前相位频率设在附近，令 <span class="math-inline">\(\omega_m=\omega_c&#x27;\)</span>。</li><li>由 <span class="math-inline">\(-L_0(\omega_m)=10\log_{10}a\)</span> 或所需相位超前确定 <span class="math-inline">\(a\)</span>，再算 <span class="math-inline">\(T=1/(\omega_m\sqrt a)\)</span>。</li><li>用校正后完整频率特性重新求截止频率、相角裕度和幅值裕度；不满足时调整参数，不应只凭最大相位超前量判断合格。</li></ol>
+<h3 id="c6-s9" tabindex="-1">滞后校正</h3>
+<p>先据稳态误差确定增益并画未校正伯德图，再选择较低的新截止频率，使原系统在该频率的相角裕度留出网络自身的滞后余量。</p>
+<div class="equation">\[20\log_{10}b+L_0(\omega_c&#x27;)\approx0,\qquad \frac1{bT}\approx0.1\omega_c&#x27;.\]</div>
+<p>设计时可先估滞后约6°；若所需 <span class="math-inline">\(T\)</span> 太大难实现，可将0.1调整到0.1～0.25，滞后估计相应约6°～14°，最后必须按准确频率特性验证。</p>
+<p>超前校正主要利用相位超前；滞后校正主要利用高频衰减，把交越点移到原系统相位滞后较小的位置。</p>
+<h3 id="c6-s10" tabindex="-1">滞后—超前校正</h3>
+<ol><li>根据稳态要求确定增益，求原系统裕度。</li><li>选择超前部分的转折频率，在截止附近形成足够宽的−20 dB/dec区段。</li></ol>
+<ol><li>按期望截止频率选择衰减系数与超前参数，按相角裕度确定低频滞后部分的转折位置。</li><li>以 <span class="math-inline">\(L_0(\omega_c&#x27;)+L_c(\omega_c&#x27;)=0\)</span> 及 <span class="math-inline">\(180^\circ+\varphi_0(\omega_c&#x27;)+\varphi_c(\omega_c&#x27;)\)</span> 为最终校验条件。</li></ol>
+<h2 id="c6-s11" tabindex="-1">反馈校正</h2>
+<p>在局部回路的 <span class="math-inline">\(\lvert G_sG_c\rvert\gg1\)</span> 频段，</p>
+<div class="equation">\[\frac{G_s}{1+G_sG_c}\approx\frac1{G_c}.\]</div>
+<p>局部闭环特性主要由反馈装置决定，可削弱非线性影响、减小有效时间常数、降低参数敏感性。原书此处标题误写“前馈校正”，内容实际为反馈校正。</p>
+<h2 id="c6-s12" tabindex="-1">复合校正与全补偿</h2>
+<h3 id="c6-s13" tabindex="-1">按扰动补偿</h3>
+<p>对本节图中扰动正向进入 <span class="math-inline">\(G_2\)</span> 前，补偿 <span class="math-inline">\(G_nN\)</span> 正向进入 <span class="math-inline">\(G_1\)</span> 前：</p>
+<div class="equation">\[C_n=\frac{G_2(1+G_1G_n)}{1+G_1G_2}N,\qquad E_n=-C_n.\]</div>
+<p>全补偿条件 <span class="math-inline">\(G_n=-1/G_1\)</span>，此时理想模型中 <span class="math-inline">\(C_n=E_n=0\)</span>。</p>
+<h3 id="c6-s14" tabindex="-1">按输入补偿</h3>
+<p>若 <span class="math-inline">\(G_rR\)</span> 与误差相加后进入 <span class="math-inline">\(G\)</span>，则 <span class="math-inline">\(C=(E+G_rR)G\)</span>，<span class="math-inline">\(E=R-C\)</span>。</p>
+<div class="equation">\[C=\frac{(1+G_r)G}{1+G}R.\]</div>
+<p>理想全补偿 <span class="math-inline">\(G_r=1/G\)</span>，得到 <span class="math-inline">\(C=R\)</span>。实际实现还需考虑逆模型是否因果、稳定及可实现；不能靠不稳定的内部约消保证性能。</p>
+<h3 id="c6-s15" tabindex="-1">习题：过阻尼与斜坡零误差</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：复合校正习题结构"><img src="assets/crop-88-115-497-439-650.webp" alt="复合校正习题结构" loading="lazy" decoding="async"></button><figcaption>复合校正习题结构</figcaption></figure>
+<div class="equation">\[G(s)=\frac{10K}{s(0.1s+1)(0.5s+1)}=\frac{200K}{s(s+10)(s+2)}.\]</div>
+<p>根轨迹实分离点满足</p>
+<div class="equation">\[\frac1d+\frac1{d+2}+\frac1{d+10}=0.\]</div>
+<p>有效点 <span class="math-inline">\(d\approx-0.945\)</span>，对应 <span class="math-inline">\(K\approx0.04514\)</span>。因此 <span class="math-inline">\(0&lt;K&lt;0.04514\)</span> 时为稳定的全实极点闭环，符合本题过阻尼要求。</p>
+<p>有前馈 <span class="math-inline">\(G_r\)</span> 时误差传递函数为</p>
+<div class="equation">\[\frac ER=\frac{s(0.1s+1)(0.5s+1)-10KG_r(s)}{s(0.1s+1)(0.5s+1)+10K}.\]</div>
+<p>对单位斜坡 <span class="math-inline">\(R=1/s^2\)</span>，取 <span class="math-inline">\(G_r=\tau s\)</span>，由终值定理得到 <span class="math-inline">\(e_{ss}=(1-10K\tau)/(10K)\)</span>。所以取</p>
+<div class="equation">\[\tau=\frac1{10K}&gt;2.215,\qquad0&lt;K&lt;0.04514.\]</div>
+<aside class="note">校注：原书终值计算第一步漏写乘子 <span class="math-inline">\(s\)</span>；以上补全并将约数保留到一致精度。</aside><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-7" class="chapter" data-chapter="7" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 07</p><h1>离散控制系统</h1><p class="chapter-meta">专题 7 · 经典控制理论</p></header><h2 id="c7-s1" tabindex="-1">基本概念</h2>
+<p>系统中至少有一处信号为离散时刻的序列或数码，称为离散系统。采样控制系统的离散信号以脉冲序列形式出现，数字控制系统以数码形式出现。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：数字控制系统的组成"><img src="assets/crop-90-102-331-447-505.webp" alt="数字控制系统的组成" loading="lazy" decoding="async"></button><figcaption>数字控制系统的组成</figcaption></figure>
+<p>数字控制具有控制规律易修改、软件实现灵活、抗干扰与控制精度潜力较高、可分时控制多个系统等优点。</p>
+<p>对于有传输延迟的对象，可结合数字控制设计适当补偿；这些优点并不意味着采样本身能保证稳定。</p>
+<h2 id="c7-s2" tabindex="-1">采样与复现</h2>
+<div class="equation">\[e^*(t)=\sum_{k=0}^\infty e(kT)\delta(t-kT),\qquad f_s=1/T,\quad\omega_s=2\pi/T.\]</div>
+<p>采样定理：带限信号最高角频率为 <span class="math-inline">\(\omega_h\)</span> 时，为避免频谱混叠应取 <span class="math-inline">\(\omega_s&gt;2\omega_h\)</span>，即 <span class="math-inline">\(T&lt;\pi/\omega_h\)</span>。原书采用“≥”的理想临界写法；等号处的频谱边界与相位有特殊限制，实际应留裕量。</p>
+<p>采样周期过大可能降低动态性能乃至失稳；过小会增加计算负担，选择应兼顾带宽、计算与硬件限制。</p>
+<p>零阶保持器将每个样值保持一个周期，其传递函数为</p>
+<div class="equation">\[G_h(s)=\frac{1-e^{-Ts}}s.\]</div>
+<p>具有低通、相位滞后和时间滞后特性；保持并不等于理想无失真复现。一阶保持可利用变化趋势，但实现与高频特性需权衡，实际广泛采用零阶保持。</p>
+<p>连续对象 <span class="math-inline">\(G_p(s)\)</span> 与零阶保持器合并后的脉冲传递函数为</p>
+<div class="equation">\[G(z)=(1-z^{-1})\mathcal Z\left[\frac{G_p(s)}s\right].\]</div>
+<p>这里 <span class="math-inline">\(\mathcal Z[F(s)]\)</span> 是先拉氏反变换、取样，再作 <span class="math-inline">\(z\)</span> 变换的简写。</p>
+<h2 id="c7-s3" tabindex="-1"><span class="math-inline">\(z\)</span> 变换</h2>
+<p>单边变换定义为</p>
+<div class="equation">\[E(z)=\sum_{k=0}^\infty e(kT)z^{-k},\qquad z=e^{sT}.\]</div>
+<p>连续积分对应离散求和，时间 <span class="math-inline">\(t\)</span> 对应 <span class="math-inline">\(kT\)</span>。<span class="math-inline">\(z\)</span> 反变换恢复样值序列，不能唯一恢复样间连续信号。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>性质</th><th>表达式</th></tr>
+<tr><td>线性性</td><td><span class="math-inline">\(\mathcal Z[ae_1+be_2]=aE_1+bE_2\)</span></td></tr>
+<tr><td>滞后</td><td><span class="math-inline">\(\mathcal Z[e_{k-m}u_{k-m}]=z^{-m}E(z)\)</span></td></tr>
+<tr><td>超前</td><td><span class="math-inline">\(\mathcal Z[e_{k+m}]=z^m[E(z)-\sum_{i=0}^{m-1}e_i z^{-i}]\)</span></td></tr>
+<tr><td>初值</td><td><span class="math-inline">\(e_0=\lim_{z\to\infty}E(z)\)</span></td></tr>
+<tr><td>终值</td><td><span class="math-inline">\(\lim_{k\to\infty}e_k=\lim_{z\to1}(1-z^{-1})E(z)\)</span></td></tr>
+<tr><td>指数移位</td><td><span class="math-inline">\(\mathcal Z[e^{-akT}e_k]=E(ze^{aT})\)</span></td></tr>
+</table></div>
+<p>终值定理要求 <span class="math-inline">\((1-z^{-1})E(z)\)</span> 的全部极点在单位圆内。常用的 <span class="math-inline">\((z-1)E(z)\)</span> 写法在 <span class="math-inline">\(z\to1\)</span> 的极限中等价。</p>
+<h3 id="c7-s4" tabindex="-1">变换表</h3>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>时间函数或序列</th><th>拉氏表达式</th><th><span class="math-inline">\(z\)</span> 变换</th></tr>
+<tr><td>单位样值脉冲 <span class="math-inline">\(\delta_k\)</span></td><td>以脉冲序列理解</td><td><span class="math-inline">\(1\)</span></td></tr>
+<tr><td>延迟 <span class="math-inline">\(m\)</span> 拍脉冲</td><td><span class="math-inline">\(e^{-mTs}\)</span></td><td><span class="math-inline">\(z^{-m}\)</span></td></tr>
+<tr><td>单位阶跃</td><td><span class="math-inline">\(1/s\)</span></td><td><span class="math-inline">\(z/(z-1)\)</span></td></tr>
+<tr><td><span class="math-inline">\(kT\)</span></td><td><span class="math-inline">\(1/s^2\)</span></td><td><span class="math-inline">\(Tz/(z-1)^2\)</span></td></tr>
+<tr><td><span class="math-inline">\((kT)^2/2\)</span></td><td><span class="math-inline">\(1/s^3\)</span></td><td><span class="math-inline">\(T^2z(z+1)/[2(z-1)^3]\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{-akT}\)</span></td><td><span class="math-inline">\(1/(s+a)\)</span></td><td><span class="math-inline">\(z/(z-e^{-aT})\)</span></td></tr>
+<tr><td><span class="math-inline">\(kTe^{-akT}\)</span></td><td><span class="math-inline">\(1/(s+a)^2\)</span></td><td><span class="math-inline">\(Te^{-aT}z/(z-e^{-aT})^2\)</span></td></tr>
+<tr><td><span class="math-inline">\(a^k\)</span></td><td><span class="math-inline">\(1/(s-\ln a/T)\)</span>，<span class="math-inline">\(a&gt;0\)</span></td><td><span class="math-inline">\(z/(z-a)\)</span></td></tr>
+</table></div>
+<p>求变换可直接级数求和，或将拉氏有理函数作部分分式展开后查表。反变换可用长除幂级数、部分分式或留数法。</p>
+<h3 id="c7-s5" tabindex="-1">习题一：三种反变换方法</h3>
+<div class="equation">\[E(z)=\frac{10z}{(z-1)(z-2)}=\frac{10z}{z-2}-\frac{10z}{z-1}.\]</div>
+<p>查表得 <span class="math-inline">\(e_k=10(2^k-1)\)</span>。</p>
+<p>幂级数法：<span class="math-inline">\(E(z)=10z^{-1}+30z^{-2}+70z^{-3}+\cdots\)</span>，依次得到 <span class="math-inline">\(e_0=0,e_1=10,e_2=30,e_3=70\)</span>。</p>
+<p>留数法：</p>
+<div class="equation">\[e_k=\sum_{z_i=1,2}\operatorname{Res}_{z=z_i}[E(z)z^{k-1}]=-10+10\,2^k.\]</div>
+<p>相应脉冲序列为 <span class="math-inline">\(e^*(t)=\sum_{k\ge0}10(2^k-1)\delta(t-kT)\)</span>。原书长除结果第三项误写为 <span class="math-inline">\(70\delta(t-T)\)</span>，此处为 <span class="math-inline">\(70\delta(t-3T)\)</span>。</p>
+<h2 id="c7-s6" tabindex="-1">数学模型</h2>
+<p>后向差分方程可写成</p>
+<div class="equation">\[c_k+a_1c_{k-1}+\cdots+a_nc_{k-n}=b_0r_k+b_1r_{k-1}+\cdots+b_mr_{k-m}.\]</div>
+<p>向前索引也可描述同一系统，但所有索引须统一平移。零初始条件下作 <span class="math-inline">\(z\)</span> 变换可求脉冲传递函数。</p>
+<h3 id="c7-s7" tabindex="-1">习题二：解差分方程</h3>
+<p><div class="equation">\[c_{k+2}+3c_{k+1}+2c_k=0,\quad c_0=0,\ c_1=1.\]</div> <div class="equation">\[\mathcal Z[c_{k+2}]=z^2C-z,\quad \mathcal Z[c_{k+1}]=zC.\]</div> <div class="equation">\[C(z)=\frac z{z^2+3z+2}=\frac z{z+1}-\frac z{z+2}.\]</div> <div class="equation">\[c_k=(-1)^k-(-2)^k,\qquad k=0,1,2,\ldots.\]</div></p>
+<h3 id="c7-s8" tabindex="-1">脉冲传递函数</h3>
+<p>零初始条件下，输出采样序列的 <span class="math-inline">\(z\)</span> 变换与输入采样序列的 <span class="math-inline">\(z\)</span> 变换之比为 <span class="math-inline">\(G(z)\)</span>。</p>
+<div class="equation">\[G(z)=\frac{C(z)}{R(z)}=\sum_{k=0}^\infty g(kT)z^{-k}.\]</div>
+<p>串联环节之间有采样开关时，等效脉冲传递函数为 <span class="math-inline">\(G_1(z)G_2(z)\)</span>；没有采样开关时，必须先合并连续环节再变换：<span class="math-inline">\(\mathcal Z[G_1(s)G_2(s)]\)</span>。两者一般不相等。原书此处文字“传递函数之和”应为“乘积”。</p>
+<h3 id="c7-s9" tabindex="-1">习题三：采样开关位置的影响</h3>
+<p>对 <span class="math-inline">\(G_1(s)=2/(s+2)\)</span>、<span class="math-inline">\(G_2(s)=5/(s+5)\)</span>：</p>
+<p><div class="equation">\[G_a(z)=\frac{10z^2}{(z-e^{-2T})(z-e^{-5T})}\qquad\text{（环节间有采样）},\]</div> <div class="equation">\[G_b(z)=\frac{10z(e^{-2T}-e^{-5T})}{3(z-e^{-2T})(z-e^{-5T})}\qquad\text{（环节间无采样）}.\]</div></p>
+<aside class="note">校注：原书题图环节分子与解答数字不一致，以上按解答中的2与5录入，避免将图中歧义当成已知条件。</aside>
+<h3 id="c7-s10" tabindex="-1">闭环与典型结构</h3>
+<p>误差处采样、连续反馈段中无采样隔开时：</p>
+<div class="equation">\[\Phi(z)=\frac{G(z)}{1+\mathcal Z[G(s)H(s)]},\qquad \Phi_e(z)=\frac1{1+\mathcal Z[G(s)H(s)]}.\]</div>
+<p>不能先对连续闭环传递函数整体作 <span class="math-inline">\(z\)</span> 变换来代替采样闭环分析。</p>
+<p>下图表保留原书的8种采样位置，记 <span class="math-inline">\([F]=\mathcal Z[F(s)]\)</span>，乘积括号不可拆开。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构1：误差端采样"><img src="assets/crop-100-126-499-360-596.webp" alt="采样结构1：误差端采样" loading="lazy" decoding="async"></button><figcaption>采样结构1：误差端采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构2：前向通路中采样"><img src="assets/crop-100-126-597-360-694.webp" alt="采样结构2：前向通路中采样" loading="lazy" decoding="async"></button><figcaption>采样结构2：前向通路中采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构3：前向输出端采样"><img src="assets/crop-101-144-146-391-264.webp" alt="采样结构3：前向输出端采样" loading="lazy" decoding="async"></button><figcaption>采样结构3：前向输出端采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构4：两级前向环节间采样"><img src="assets/crop-101-144-265-391-362.webp" alt="采样结构4：两级前向环节间采样" loading="lazy" decoding="async"></button><figcaption>采样结构4：两级前向环节间采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构5：三级前向环节间采样"><img src="assets/crop-101-144-363-391-458.webp" alt="采样结构5：三级前向环节间采样" loading="lazy" decoding="async"></button><figcaption>采样结构5：三级前向环节间采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构6：反馈端采样"><img src="assets/crop-101-144-459-391-554.webp" alt="采样结构6：反馈端采样" loading="lazy" decoding="async"></button><figcaption>采样结构6：反馈端采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构7：误差与反馈端采样"><img src="assets/crop-101-144-555-391-651.webp" alt="采样结构7：误差与反馈端采样" loading="lazy" decoding="async"></button><figcaption>采样结构7：误差与反馈端采样</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：采样结构8：多个采样开关"><img src="assets/crop-101-144-652-391-762.webp" alt="采样结构8：多个采样开关" loading="lazy" decoding="async"></button><figcaption>采样结构8：多个采样开关</figcaption></figure>
+<p>对应输出依次为：</p>
+<p><div class="equation">\[C_1=\frac{[G]R(z)}{1+[GH]},\quad C_2=\frac{[RG_1][G_2]}{1+[G_1HG_2]},\]</div> <div class="equation">\[C_3=\frac{[G]R(z)}{1+[G][H]},\quad C_4=\frac{[G_1][G_2]R(z)}{1+[G_1][G_2H]},\]</div> <div class="equation">\[C_5=\frac{[RG_1][G_2][G_3]}{1+[G_2][G_1G_3H]},\quad C_6=\frac{[RG]}{1+[HG]},\]</div> <div class="equation">\[C_7=\frac{R(z)[G]}{1+[G][H]},\quad C_8=\frac{[G_1][G_2]R(z)}{1+[G_1][G_2][H]}.\]</div></p>
+<h2 id="c7-s11" tabindex="-1">离散系统性能分析</h2>
+<h3 id="c7-s12" tabindex="-1">稳定条件与双线性变换</h3>
+<p>渐近稳定的充要条件：全部特征根严格位于 <span class="math-inline">\(z\)</span> 平面单位圆内，即 <span class="math-inline">\(\lvert z_i\rvert&lt;1\)</span>。单位圆边界单根属于临界情况，应另外判断。</p>
+<p>可直接求根；也可用 <span class="math-inline">\(z=(1+w)/(1-w)\)</span> 将单位圆内映射到 <span class="math-inline">\(w\)</span> 左半平面，清分母后用劳斯判据。原书另一个映射 <span class="math-inline">\(z=(w+1)/(w-1)\)</span> 同样将单位圆内映到左半平面，使用时必须保持代数一致。</p>
+<h3 id="c7-s13" tabindex="-1">朱利判据</h3>
+<p>设 <span class="math-inline">\(\Delta(z)=a_nz^n+\cdots+a_1z+a_0,\ a_n&gt;0\)</span>。第一行按低次到高次排列系数，第二行倒序。</p>
+<div class="equation">\[\begin{array}{c|ccccc}
+1&amp;a_0&amp;a_1&amp;\cdots&amp;a_{n-1}&amp;a_n\\
+2&amp;a_n&amp;a_{n-1}&amp;\cdots&amp;a_1&amp;a_0\\
+3&amp;b_0&amp;b_1&amp;\cdots&amp;b_{n-1}&amp;\\
+4&amp;b_{n-1}&amp;b_{n-2}&amp;\cdots&amp;b_0&amp;\\
+5&amp;c_0&amp;c_1&amp;\cdots&amp;c_{n-2}&amp;
+\end{array}\]</div>
+<p><div class="equation">\[b_k=a_0a_k-a_na_{n-k},\quad k=0,\ldots,n-1;\]</div> <div class="equation">\[c_k=b_0b_k-b_{n-1}b_{n-1-k},\quad k=0,\ldots,n-2.\]</div></p>
+<p>继续直到剩3个元素。稳定要求同时满足</p>
+<p><div class="equation">\[\Delta(1)&gt;0,\qquad(-1)^n\Delta(-1)&gt;0,\qquad\lvert a_0\rvert&lt;a_n,\]</div> <div class="equation">\[\lvert b_0\rvert&gt;\lvert b_{n-1}\rvert,\quad\lvert c_0\rvert&gt;\lvert c_{n-2}\rvert,\quad\ldots.\]</div></p>
+<p>二阶首一多项式只需检查 <span class="math-inline">\(\Delta(1)&gt;0,\Delta(-1)&gt;0,\lvert a_0\rvert&lt;1\)</span>。</p>
+<h3 id="c7-s14" tabindex="-1">习题四：朱利稳定性检验</h3>
+<div class="equation">\[D(z)=z^4-1.368z^3+0.4z^2+0.08z+0.002.\]</div>
+<p>升幂系数 <span class="math-inline">\((0.002,0.08,0.4,-1.368,1)\)</span>，按原书取三位小数列得</p>
+<div class="equation">\[b\approx(-1,1.368,-0.399,-0.082),\qquad c\approx(0.993,-1.401,0.511).\]</div>
+<p><span class="math-inline">\(D(1)=0.114&gt;0\)</span>，<span class="math-inline">\(D(-1)=2.690&gt;0\)</span>，并且 <span class="math-inline">\(0.002&lt;1,\ 1&gt;0.082,\ 0.993&gt;0.511\)</span>，故稳定。</p>
+<h3 id="c7-s15" tabindex="-1">稳态误差</h3>
+<p>先判稳，再用终值定理：</p>
+<div class="equation">\[e_{ss}=\lim_{z\to1}(1-z^{-1})E(z)=\lim_{z\to1}\frac{(1-z^{-1})R(z)}{1+G(z)}.\]</div>
+<p>采用原书的离散误差系数约定（注意与连续系统 <span class="math-inline">\(K_p\)</span> 的定义不同）：</p>
+<div class="equation">\[K_p=\lim_{z\to1}[1+G(z)],\quad K_v=\lim_{z\to1}(z-1)G(z),\quad K_a=\lim_{z\to1}(z-1)^2G(z).\]</div>
+<p>阶跃、单位斜坡、单位加速度输入误差分别为 <span class="math-inline">\(1/K_p,T/K_v,T^2/K_a\)</span>，有限值的适用型别如下。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>型别</th><th>阶跃</th><th>斜坡</th><th>加速度</th></tr>
+<tr><td>0</td><td><span class="math-inline">\(1/K_p\)</span></td><td><span class="math-inline">\(\infty\)</span></td><td><span class="math-inline">\(\infty\)</span></td></tr>
+<tr><td>I</td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(T/K_v\)</span></td><td><span class="math-inline">\(\infty\)</span></td></tr>
+<tr><td>II</td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(T^2/K_a\)</span></td></tr>
+<tr><td>III</td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td><td><span class="math-inline">\(0\)</span></td></tr>
+</table></div>
+<h3 id="c7-s16" tabindex="-1">习题五：零阶保持系统的误差</h3>
+<p>对象 <span class="math-inline">\(G_p(s)=K/[s(s+1)]\)</span>，误差处采样，<span class="math-inline">\(T=0.1,K=1\)</span>，输入 <span class="math-inline">\(r(t)=t\)</span>。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：零阶保持闭环习题"><img src="assets/crop-107-164-94-480-204.webp" alt="零阶保持闭环习题" loading="lazy" decoding="async"></button><figcaption>零阶保持闭环习题</figcaption></figure>
+<p>记 <span class="math-inline">\(a=e^{-T}\)</span>，用 <span class="math-inline">\(1/[s^2(s+1)]=1/s^2-1/s+1/(s+1)\)</span>，得到准确表达式</p>
+<div class="equation">\[G(z)=\frac{(T-1+a)z+1-a-Ta}{(z-1)(z-a)}.\]</div>
+<p>当 <span class="math-inline">\(T=0.1\)</span>，分子约为 <span class="math-inline">\(0.0048374z+0.0046788\)</span>。闭环极点约为 <span class="math-inline">\(0.9500\pm j0.0837\)</span>，模小于1，稳定。</p>
+<div class="equation">\[K_p=\infty,\qquad K_v=T=0.1,\qquad K_a=0.\]</div>
+<p>故为I型系统，单位斜坡稳态误差 <span class="math-inline">\(e_{ss}=T/K_v=1\)</span>。</p>
+<aside class="note">校注：原书过早将 <span class="math-inline">\(e^{-0.1}\)</span> 近似为0.905，导致中间分子和极点数值不一致；此处保留精度，最终误差结论相同。</aside>
+<h3 id="c7-s17" tabindex="-1">极点与瞬态响应</h3>
+<p>负实极点产生交替变号的指数模态；复极点产生振荡模态；单位圆内极点越靠近原点，衰减越快。靠近正实轴可减弱样值振荡，但零点、残值及控制量约束仍影响实际响应。</p>
+<h2 id="c7-s18" tabindex="-1">数字校正：最少拍设计</h2>
+<p>最少拍系统在最少的采样周期后，使典型输入的采样误差为零。对无额外延迟、无单位圆上及圆外零极点的简单对象，可选 <span class="math-inline">\(\Phi_e(z)=(1-z^{-1})^q\)</span>，<span class="math-inline">\(\Phi=1-\Phi_e\)</span>，其中阶跃、斜坡、加速度分别对应 <span class="math-inline">\(q=1,2,3\)</span>。</p>
+<div class="equation">\[D(z)=\frac{\Phi(z)}{G(z)\Phi_e(z)}.\]</div>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>输入</th><th><span class="math-inline">\(\Phi_e\)</span></th><th><span class="math-inline">\(\Phi\)</span></th><th>理想最少拍调节时间</th></tr>
+<tr><td>阶跃</td><td><span class="math-inline">\(1-z^{-1}\)</span></td><td><span class="math-inline">\(z^{-1}\)</span></td><td><span class="math-inline">\(T\)</span></td></tr>
+<tr><td>斜坡</td><td><span class="math-inline">\((1-z^{-1})^2\)</span></td><td><span class="math-inline">\(2z^{-1}-z^{-2}\)</span></td><td><span class="math-inline">\(2T\)</span></td></tr>
+<tr><td>加速度</td><td><span class="math-inline">\((1-z^{-1})^3\)</span></td><td><span class="math-inline">\(3z^{-1}-3z^{-2}+z^{-3}\)</span></td><td><span class="math-inline">\(3T\)</span></td></tr>
+</table></div>
+<p>有约束时，先找不能约消的单位圆上及圆外零极点和延迟环节，再依据输入选误差因子，按对象零极点、延迟选择闭环因子，使 <span class="math-inline">\(\Phi+\Phi_e=1\)</span> 并满足因果性，最后算 <span class="math-inline">\(D\)</span> 并检验内部稳定性。</p>
+<p>无纹波最少拍还要求样间行为满足无纹波条件，通常须在闭环设计中保留对象全部有限零点所需的因子，不能只检查采样时刻误差。原书列出的步骤为：找约束零极点 → 据输入确定因子 → 纳入零点及延迟 → 由二者相加为1求系数 → 计算控制器。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-8" class="chapter" data-chapter="8" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 08</p><h1>非线性控制系统分析</h1><p class="chapter-meta">专题 8 · 经典控制理论</p></header><h2 id="c8-s1" tabindex="-1">相平面法</h2>
+<p>相平面法是时域图解方法：保留非线性特性，将线性部分适当近似为二阶，以两个状态变量画相轨迹，分析稳定性和运动。通常适用于一阶、二阶或可降阶的简单系统。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：相轨迹方向与运动状态"><img src="assets/crop-110-192-358-373-555.webp" alt="相轨迹方向与运动状态" loading="lazy" decoding="async"></button><figcaption>相轨迹方向与运动状态</figcaption></figure>
+<p>解析法把微分方程化为曲线方程；等倾线法则寻找具有相同轨迹斜率的点集。对 <span class="math-inline">\(\ddot x+a_1\dot x+a_0x=0\)</span>，相平面斜率 <span class="math-inline">\(\alpha=d\dot x/dx=\ddot x/\dot x\)</span>。</p>
+<div class="equation">\[\dot x=-\frac{a_0}{\alpha+a_1}x.\]</div>
+<p>每个固定 <span class="math-inline">\(\alpha\)</span> 对应一条过原点的等倾线（分母为零等特殊情形另行处理）。<span class="math-inline">\(\dot x&gt;0\)</span> 时轨迹向右，<span class="math-inline">\(\dot x&lt;0\)</span> 时向左；在横轴上的常规点竖直穿越。</p>
+<h3 id="c8-s2" tabindex="-1">奇点与局部线性化</h3>
+<p>对 <span class="math-inline">\(\ddot x+f(x,\dot x)=0\)</span>，平衡点满足 <span class="math-inline">\(\dot x=0,\ f(x,0)=0\)</span>。在 <span class="math-inline">\((x_0,0)\)</span> 附近令 <span class="math-inline">\(\xi=x-x_0\)</span>：</p>
+<div class="equation">\[\ddot\xi+a_1\dot\xi+a_0\xi=0,\quad a_1=\left.\frac{\partial f}{\partial\dot x}\right|_{(x_0,0)},\quad a_0=\left.\frac{\partial f}{\partial x}\right|_{(x_0,0)}.\]</div>
+<p>求特征根后判断奇点：</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>特征根</th><th>线性相图类型</th></tr>
+<tr><td>两个负实根</td><td>稳定节点</td></tr>
+<tr><td>两个正实根</td><td>不稳定节点</td></tr>
+<tr><td>共轭根且实部负</td><td>稳定焦点</td></tr>
+<tr><td>共轭根且实部正</td><td>不稳定焦点</td></tr>
+<tr><td>两实根异号</td><td>鞍点，不稳定</td></tr>
+<tr><td>一对纯虚根</td><td>线性系统为中心；非线性系统需进一步分析</td></tr>
+</table></div>
+<figure><button class="figure-open" type="button" aria-label="放大：焦点示意"><img src="assets/crop-111-101-596-514-714.webp" alt="焦点示意" loading="lazy" decoding="async"></button><figcaption>焦点示意</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：节点、中心与鞍点示意"><img src="assets/crop-112-85-83-491-312.webp" alt="节点、中心与鞍点示意" loading="lazy" decoding="async"></button><figcaption>节点、中心与鞍点示意</figcaption></figure>
+<h2 id="c8-s3" tabindex="-1">描述函数法</h2>
+<p>将非线性元件在正弦输入作用下的输出用基波近似，用输出基波与输入的复比定义 <span class="math-inline">\(N(A)\)</span>。适用时要求线性部分能充分衰减高次谐波、输入可近似为正弦等，结论属于近似分析。</p>
+<p>对 <span class="math-inline">\(x=A\sin\theta\)</span>，若输出基波为 <span class="math-inline">\(b_1\sin\theta+a_1\cos\theta\)</span>：</p>
+<div class="equation">\[N(A)=\frac{b_1+ja_1}{A},\quad b_1=\frac1\pi\int_{-\pi}^{\pi}y(\theta)\sin\theta\,d\theta,\quad a_1=\frac1\pi\int_{-\pi}^{\pi}y(\theta)\cos\theta\,d\theta.\]</div>
+<p>化为典型单位负反馈结构后，谐波平衡条件为</p>
+<div class="equation">\[1+N(A)G(j\omega)=0\quad\Longleftrightarrow\quad G(j\omega)=-\frac1{N(A)}.\]</div>
+<h3 id="c8-s4" tabindex="-1">常见描述函数</h3>
+<p>下列 <span class="math-inline">\(K\)</span> 为分段线性斜率，<span class="math-inline">\(M\)</span> 为继电输出幅值，<span class="math-inline">\(A\)</span> 为输入振幅，阈值参数须与图对应。</p>
+<p><strong>饱和</strong>（拐点 <span class="math-inline">\(\pm a\)</span>）：<span class="math-inline">\(A\le a\)</span> 时 <span class="math-inline">\(N=K\)</span>；<span class="math-inline">\(A\ge a\)</span> 时</p>
+<div class="equation">\[N(A)=\frac{2K}\pi\left[\arcsin\frac aA+\frac aA\sqrt{1-(a/A)^2}\right].\]</div>
+<p><strong>死区</strong>（宽度参数 <span class="math-inline">\(\Delta\)</span>）：<span class="math-inline">\(A\le\Delta\)</span> 时 <span class="math-inline">\(N=0\)</span>；<span class="math-inline">\(A\ge\Delta\)</span> 时</p>
+<div class="equation">\[N(A)=\frac{2K}\pi\left[\frac\pi2-\arcsin\frac\Delta A-\frac\Delta A\sqrt{1-(\Delta/A)^2}\right].\]</div>
+<p><strong>理想继电</strong>：<span class="math-inline">\(N(A)=4M/(\pi A)\)</span>。</p>
+<p><strong>有死区继电</strong>（阈值 <span class="math-inline">\(h\)</span>，<span class="math-inline">\(A\ge h\)</span>）：</p>
+<div class="equation">\[N(A)=\frac{4M}{\pi A}\sqrt{1-(h/A)^2}.\]</div>
+<p><strong>滞环继电</strong>（切换阈值 <span class="math-inline">\(\pm h\)</span>，<span class="math-inline">\(A\ge h\)</span>）：</p>
+<div class="equation">\[N(A)=\frac{4M}{\pi A}\sqrt{1-(h/A)^2}-j\frac{4Mh}{\pi A^2}.\]</div>
+<p><strong>死区加滞环继电</strong>（图示切换阈值 <span class="math-inline">\(mh,h\)</span>，<span class="math-inline">\(A\ge h\)</span>）：</p>
+<div class="equation">\[N(A)=\frac{2M}{\pi A}\left[\sqrt{1-(mh/A)^2}+\sqrt{1-(h/A)^2}\right]+j\frac{2Mh}{\pi A^2}(m-1).\]</div>
+<figure><button class="figure-open" type="button" aria-label="放大：饱和特性曲线"><img src="assets/crop-113-207-198-294-287.webp" alt="饱和特性曲线" loading="lazy" decoding="async"></button><figcaption>饱和特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：死区特性曲线"><img src="assets/crop-113-207-288-294-370.webp" alt="死区特性曲线" loading="lazy" decoding="async"></button><figcaption>死区特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：理想继电特性曲线"><img src="assets/crop-113-207-371-294-454.webp" alt="理想继电特性曲线" loading="lazy" decoding="async"></button><figcaption>理想继电特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：有死区继电特性曲线"><img src="assets/crop-113-207-455-294-546.webp" alt="有死区继电特性曲线" loading="lazy" decoding="async"></button><figcaption>有死区继电特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：滞环继电特性曲线"><img src="assets/crop-113-207-547-294-637.webp" alt="滞环继电特性曲线" loading="lazy" decoding="async"></button><figcaption>滞环继电特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：死区加滞环继电特性曲线"><img src="assets/crop-113-207-638-294-755.webp" alt="死区加滞环继电特性曲线" loading="lazy" decoding="async"></button><figcaption>死区加滞环继电特性曲线</figcaption></figure>
+<p><strong>回隙</strong>（半回隙参数 <span class="math-inline">\(\delta\)</span>，<span class="math-inline">\(A\ge\delta\)</span>）：令 <span class="math-inline">\(q=\delta/A\)</span>，</p>
+<div class="equation">\[N(A)=\frac K\pi\left[\frac\pi2+\arcsin(1-2q)+2(1-2q)\sqrt{q(1-q)}\right]-j\frac{4K}\pi q(1-q).\]</div>
+<p><strong>有死区的饱和</strong>（死区阈值 <span class="math-inline">\(\Delta\)</span>、饱和拐点 <span class="math-inline">\(a\)</span>，<span class="math-inline">\(A\ge a\)</span>）：</p>
+<div class="equation">\[N(A)=\frac{2K}\pi\left[\arcsin\frac aA-\arcsin\frac\Delta A+\frac aA\sqrt{1-(a/A)^2}-\frac\Delta A\sqrt{1-(\Delta/A)^2}\right].\]</div>
+<figure><button class="figure-open" type="button" aria-label="放大：回隙特性曲线"><img src="assets/crop-114-185-127-270-245.webp" alt="回隙特性曲线" loading="lazy" decoding="async"></button><figcaption>回隙特性曲线</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：有死区饱和特性曲线"><img src="assets/crop-114-185-246-270-360.webp" alt="有死区饱和特性曲线" loading="lazy" decoding="async"></button><figcaption>有死区饱和特性曲线</figcaption></figure>
+<h2 id="c8-s5" tabindex="-1">稳定性与自激振荡</h2>
+<p>在复平面同时画 <span class="math-inline">\(G(j\omega)\)</span> 和 <span class="math-inline">\(-1/N(A)\)</span>。在满足描述函数假设及相应线性部分稳定性条件时，用两曲线的相对位置按奈氏思路判断；交点给出候选振幅和频率。原书用“由不稳定区域进入稳定区域”判断稳定自振；实际需检查交点附近振幅增减时的恢复趋势。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：描述函数分析中的相交关系"><img src="assets/crop-115-91-98-519-231.webp" alt="描述函数分析中的相交关系" loading="lazy" decoding="async"></button><figcaption>描述函数分析中的相交关系</figcaption></figure>
+<p>交点处实部、虚部分别相等，联立求 <span class="math-inline">\(A,\omega\)</span>。当 <span class="math-inline">\(N(A)\)</span> 为实数，可先由 <span class="math-inline">\(\arg G(j\omega)=-180^\circ\)</span> 求频率，再求幅值。</p>
+<div class="equation">\[G(s)=\frac K{s(T_1s+1)(T_2s+1)}\quad\Longrightarrow\quad\omega_x=\frac1{\sqrt{T_1T_2}},\quad G(j\omega_x)=-\frac{KT_1T_2}{T_1+T_2}.\]</div>
+<h2 id="c8-s6" tabindex="-1">组合非线性与相轨迹方程</h2>
+<p>两个非线性环节并联，在相同正弦输入下基波叠加，描述函数相加。两个非线性环节串联时，一般不能直接相乘；需先求等效静态特性，再按定义求描述函数。</p>
+<figure><button class="figure-open" type="button" aria-label="放大：并联非线性的等效"><img src="assets/crop-116-85-141-461-251.webp" alt="并联非线性的等效" loading="lazy" decoding="async"></button><figcaption>并联非线性的等效</figcaption></figure>
+<figure><button class="figure-open" type="button" aria-label="放大：串联非线性的图解合成"><img src="assets/crop-116-83-305-465-720.webp" alt="串联非线性的图解合成" loading="lazy" decoding="async"></button><figcaption>串联非线性的图解合成</figcaption></figure>
+<p>由框图列方程的步骤：写非线性分段函数 → 写线性部分微分方程 → 写误差定义 → 用中间变量联结并消元，统一状态变量。</p>
+<h3 id="c8-s7" tabindex="-1">习题一：继电系统的自振</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：继电自振习题与频域关系"><img src="assets/crop-117-118-445-505-645.webp" alt="继电自振习题与频域关系" loading="lazy" decoding="async"></button><figcaption>继电自振习题与频域关系</figcaption></figure>
+<p>继电输出为 <span class="math-inline">\(\pm1\)</span>，线性前向 <span class="math-inline">\(5/[s(s+2)^2]\)</span>，反馈为2。把反馈并入线性部分得到 <span class="math-inline">\(G(s)=10/[s(s+2)^2]\)</span>，<span class="math-inline">\(N(A)=4/(\pi A)\)</span>。</p>
+<p>由相角条件 <span class="math-inline">\(\omega=2\)</span>，且 <span class="math-inline">\(G(j2)=-5/8\)</span>，故</p>
+<div class="equation">\[-\frac{\pi A}4=-\frac58\quad\Longrightarrow\quad A=\frac5{2\pi}\approx0.796.\]</div>
+<p>描述函数近似预测稳定自振。若选 <span class="math-inline">\(x(t)=A\sin2t\)</span> 为相位基准，则 <span class="math-inline">\(c(t)=-x(t)/2\approx-0.398\sin2t\)</span>，<span class="math-inline">\(y(t)=\operatorname{sgn}(\sin2t)\)</span>。原书“必然存在”的表述应结合基波近似理解，不能视为精确非线性存在性证明。</p>
+<h3 id="c8-s8" tabindex="-1">习题二：非线性摆的奇点</h3>
+<div class="equation">\[\ddot x+\dot x+\sin x=0.\]</div>
+<p>奇点 <span class="math-inline">\((x,\dot x)=(k\pi,0),\ k\in\mathbb Z\)</span>。线性化 <span class="math-inline">\(a_1=1,a_0=\cos(k\pi)=(-1)^k\)</span>。</p>
+<p>偶数 <span class="math-inline">\(k\)</span>：<span class="math-inline">\(\ddot\xi+\dot\xi+\xi=0\)</span>，根 <span class="math-inline">\((-1\pm j\sqrt3)/2\)</span>，稳定焦点。</p>
+<p>奇数 <span class="math-inline">\(k\)</span>：<span class="math-inline">\(\ddot\xi+\dot\xi-\xi=0\)</span>，根 <span class="math-inline">\((-1\pm\sqrt5)/2\)</span>，一正一负，为鞍点。</p>
+<aside class="note">校注：原书偶数 <span class="math-inline">\(k\)</span> 的中间行将 <span class="math-inline">\(\cos(2k\pi)\)</span> 误写成−1，此处为+1；最终奇点分类与原书一致。</aside>
+<h3 id="c8-s9" tabindex="-1">习题三：等倾线</h3>
+<figure><button class="figure-open" type="button" aria-label="放大：继电反馈系统等倾线习题"><img src="assets/crop-120-118-87-457-167.webp" alt="继电反馈系统等倾线习题" loading="lazy" decoding="async"></button><figcaption>继电反馈系统等倾线习题</figcaption></figure>
+<p>前向线性部分 <span class="math-inline">\(K/[s(s+4)]\)</span>，单位负反馈，<span class="math-inline">\(r=0\)</span>，继电输出 <span class="math-inline">\(y=2\operatorname{sgn}e\)</span>。由 <span class="math-inline">\(\ddot c+4\dot c=Ky\)</span> 及 <span class="math-inline">\(e=-c\)</span>：</p>
+<div class="equation">\[\ddot e=\begin{cases}-4\dot e-2K,&amp;e&gt;0,\\-4\dot e+2K,&amp;e&lt;0.\end{cases}\]</div>
+<p>设 <span class="math-inline">\(d\dot e/de=\alpha\)</span>，用 <span class="math-inline">\(\ddot e=\alpha\dot e\)</span>，得</p>
+<div class="equation">\[\dot e=\begin{cases}-2K/(4+\alpha),&amp;e&gt;0,\\2K/(4+\alpha),&amp;e&lt;0.\end{cases}\]</div>
+<p>本专题重点是相平面法、奇点分类、描述函数与候选自振的计算，应用时须先核验相应近似条件。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article><article id="chapter-9" class="chapter" data-chapter="9" hidden><header class="chapter-heading"><p class="eyebrow">CLASSICAL CONTROL / 附录</p><h1>附录：变换速查</h1><p class="chapter-meta">变换公式与收敛域</p></header><h2 id="c9-s1" tabindex="-1">拉普拉斯变换对</h2>
+<p>本表包括双边变换，<span class="math-inline">\(\sigma=\operatorname{Re}s\)</span>；<span class="math-inline">\(u(t)\)</span> 为单位阶跃，<span class="math-inline">\(n\)</span> 为非负整数。收敛域是变换对的一部分，同一代数式可对应不同时间信号。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>连续时间信号</th><th>拉氏变换</th><th>收敛域</th></tr>
+<tr><td><span class="math-inline">\(\delta(t)\)</span></td><td><span class="math-inline">\(1\)</span></td><td>全平面</td></tr>
+<tr><td><span class="math-inline">\(\delta(t-t_0)\)</span></td><td><span class="math-inline">\(e^{-st_0}\)</span></td><td>全平面</td></tr>
+<tr><td><span class="math-inline">\(u(t)\)</span></td><td><span class="math-inline">\(1/s\)</span></td><td><span class="math-inline">\(\sigma&gt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(-u(-t)\)</span></td><td><span class="math-inline">\(1/s\)</span></td><td><span class="math-inline">\(\sigma&lt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(t^nu(t)/n!\)</span></td><td><span class="math-inline">\(1/s^{n+1}\)</span></td><td><span class="math-inline">\(\sigma&gt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(-t^nu(-t)/n!\)</span></td><td><span class="math-inline">\(1/s^{n+1}\)</span></td><td><span class="math-inline">\(\sigma&lt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{s_0t}u(t)\)</span></td><td><span class="math-inline">\(1/(s-s_0)\)</span></td><td><span class="math-inline">\(\sigma&gt;\operatorname{Re}s_0\)</span></td></tr>
+<tr><td><span class="math-inline">\(-e^{s_0t}u(-t)\)</span></td><td><span class="math-inline">\(1/(s-s_0)\)</span></td><td><span class="math-inline">\(\sigma&lt;\operatorname{Re}s_0\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{at}u(t)\)</span></td><td><span class="math-inline">\(1/(s-a)\)</span></td><td><span class="math-inline">\(\sigma&gt;a\)</span></td></tr>
+<tr><td><span class="math-inline">\(-e^{at}u(-t)\)</span></td><td><span class="math-inline">\(1/(s-a)\)</span></td><td><span class="math-inline">\(\sigma&lt;a\)</span></td></tr>
+<tr><td><span class="math-inline">\(t^ne^{at}u(t)/n!\)</span></td><td><span class="math-inline">\(1/(s-a)^{n+1}\)</span></td><td><span class="math-inline">\(\sigma&gt;a\)</span></td></tr>
+<tr><td><span class="math-inline">\(-t^ne^{at}u(-t)/n!\)</span></td><td><span class="math-inline">\(1/(s-a)^{n+1}\)</span></td><td><span class="math-inline">\(\sigma&lt;a\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{-b\lvert t\rvert},\ b&gt;0\)</span></td><td><span class="math-inline">\(-2b/(s^2-b^2)\)</span></td><td><span class="math-inline">\(-b&lt;\sigma&lt;b\)</span></td></tr>
+<tr><td><span class="math-inline">\(\cos(\omega_0t)u(t)\)</span></td><td><span class="math-inline">\(s/(s^2+\omega_0^2)\)</span></td><td><span class="math-inline">\(\sigma&gt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(\sin(\omega_0t)u(t)\)</span></td><td><span class="math-inline">\(\omega_0/(s^2+\omega_0^2)\)</span></td><td><span class="math-inline">\(\sigma&gt;0\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{-at}\cos(\omega_0t)u(t)\)</span></td><td><span class="math-inline">\((s+a)/[(s+a)^2+\omega_0^2]\)</span></td><td><span class="math-inline">\(\sigma&gt;-a\)</span></td></tr>
+<tr><td><span class="math-inline">\(e^{-at}\sin(\omega_0t)u(t)\)</span></td><td><span class="math-inline">\(\omega_0/[(s+a)^2+\omega_0^2]\)</span></td><td><span class="math-inline">\(\sigma&gt;-a\)</span></td></tr>
+<tr><td><span class="math-inline">\(\delta^{(n)}(t)\)</span></td><td><span class="math-inline">\(s^n\)</span></td><td>全平面</td></tr>
+</table></div>
+<p>原书另列的阶跃反复积分关系与 <span class="math-inline">\(t^nu(t)/n!\)</span> 项相同，使用时以实际积分次数核对幂次。</p>
+<h2 id="c9-s2" tabindex="-1">拉氏变换的性质</h2>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>性质</th><th>时间域</th><th>复频域</th></tr>
+<tr><td>线性</td><td><span class="math-inline">\(a_1f_1+a_2f_2\)</span></td><td><span class="math-inline">\(a_1F_1+a_2F_2\)</span></td></tr>
+<tr><td>时间平移（双边）</td><td><span class="math-inline">\(f(t-t_0)\)</span></td><td><span class="math-inline">\(e^{-st_0}F(s)\)</span></td></tr>
+<tr><td>复频移位</td><td><span class="math-inline">\(e^{s_0t}f(t)\)</span></td><td><span class="math-inline">\(F(s-s_0)\)</span></td></tr>
+<tr><td>尺度</td><td><span class="math-inline">\(f(at),\ a\ne0\)</span></td><td><span class="math-inline">\(F(s/a)/\lvert a\rvert\)</span></td></tr>
+<tr><td>共轭</td><td><span class="math-inline">\(f^*(t)\)</span></td><td><span class="math-inline">\(F^*(s^*)\)</span></td></tr>
+<tr><td>卷积</td><td><span class="math-inline">\(f_1*f_2\)</span></td><td><span class="math-inline">\(F_1F_2\)</span></td></tr>
+<tr><td>时域微分（双边或零初值）</td><td><span class="math-inline">\(df/dt\)</span></td><td><span class="math-inline">\(sF(s)\)</span></td></tr>
+<tr><td>时域积分</td><td><span class="math-inline">\(\int_{-\infty}^t f(\tau)d\tau\)</span></td><td><span class="math-inline">\(F(s)/s\)</span>，并取相应收敛域</td></tr>
+<tr><td>复频域微分</td><td><span class="math-inline">\(-tf(t)\)</span></td><td><span class="math-inline">\(dF/ds\)</span></td></tr>
+</table></div>
+<p>初值定理：<span class="math-inline">\(f(0^+)=\lim_{s\to\infty}sF(s)\)</span>，要求原点无冲激及其导数等奇异项。终值定理：<span class="math-inline">\(f(\infty)=\lim_{s\to0}sF(s)\)</span>，须满足相应极点条件。对单边非零初值问题，微分变换须加入初值项。</p>
+<h2 id="c9-s3" tabindex="-1">双边 <span class="math-inline">\(Z\)</span> 变换对</h2>
+<p>定义 <span class="math-inline">\(X(z)=\sum_{n=-\infty}^{\infty}x[n]z^{-n}\)</span>。</p>
+<div class="table-scroll" tabindex="0" aria-label="可横向滚动的表格"><table>
+<tr><th>离散时间信号</th><th><span class="math-inline">\(Z\)</span> 变换</th><th>收敛域</th></tr>
+<tr><td><span class="math-inline">\(\delta[n]\)</span></td><td><span class="math-inline">\(1\)</span></td><td>全平面</td></tr>
+<tr><td><span class="math-inline">\(\delta[n-n_0]\)</span></td><td><span class="math-inline">\(z^{-n_0}\)</span></td><td>除可能的零点或无穷远点外全平面，依 <span class="math-inline">\(n_0\)</span> 而定</td></tr>
+<tr><td><span class="math-inline">\(u[n]\)</span></td><td><span class="math-inline">\(1/(1-z^{-1})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;1\)</span></td></tr>
+<tr><td><span class="math-inline">\(-u[-n-1]\)</span></td><td><span class="math-inline">\(1/(1-z^{-1})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&lt;1\)</span></td></tr>
+<tr><td><span class="math-inline">\(a^nu[n]\)</span></td><td><span class="math-inline">\(1/(1-az^{-1})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert a\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(-a^nu[-n-1]\)</span></td><td><span class="math-inline">\(1/(1-az^{-1})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&lt;\lvert a\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(na^{n-1}u[n]\)</span></td><td><span class="math-inline">\(z^{-1}/(1-az^{-1})^2\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert a\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(-na^{n-1}u[-n-1]\)</span></td><td><span class="math-inline">\(z^{-1}/(1-az^{-1})^2\)</span></td><td><span class="math-inline">\(\lvert z\rvert&lt;\lvert a\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(\binom n{k-1}a^{n-k+1}u[n]\)</span></td><td><span class="math-inline">\(z^{-k+1}/(1-az^{-1})^k\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert a\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(r_0^ne^{j\Omega_0n}u[n]\)</span></td><td><span class="math-inline">\(1/[1-r_0e^{j\Omega_0}z^{-1}]\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert r_0\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(r_0^ne^{-j\Omega_0n}u[n]\)</span></td><td><span class="math-inline">\(1/[1-r_0e^{-j\Omega_0}z^{-1}]\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert r_0\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(\cos(\Omega_0n)u[n]\)</span></td><td><span class="math-inline">\((1-\cos\Omega_0z^{-1})/(1-2\cos\Omega_0z^{-1}+z^{-2})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;1\)</span></td></tr>
+<tr><td><span class="math-inline">\(\sin(\Omega_0n)u[n]\)</span></td><td><span class="math-inline">\(\sin\Omega_0z^{-1}/(1-2\cos\Omega_0z^{-1}+z^{-2})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;1\)</span></td></tr>
+<tr><td><span class="math-inline">\(r_0^n\cos(\Omega_0n)u[n]\)</span></td><td><span class="math-inline">\((1-r_0\cos\Omega_0z^{-1})/(1-2r_0\cos\Omega_0z^{-1}+r_0^2z^{-2})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert r_0\rvert\)</span></td></tr>
+<tr><td><span class="math-inline">\(r_0^n\sin(\Omega_0n)u[n]\)</span></td><td><span class="math-inline">\(r_0\sin\Omega_0z^{-1}/(1-2r_0\cos\Omega_0z^{-1}+r_0^2z^{-2})\)</span></td><td><span class="math-inline">\(\lvert z\rvert&gt;\lvert r_0\rvert\)</span></td></tr>
+</table></div>
+<aside class="note">校注：原书 <span class="math-inline">\(na^{n-1}\)</span> 两项的分子多写了一个 <span class="math-inline">\(a\)</span>，本表按对 <span class="math-inline">\(a^n\)</span> 求导的变换关系更正。<span class="math-inline">\(na^n\)</span> 的变换分子才是 <span class="math-inline">\(az^{-1}\)</span>。</aside>
+<h2 id="c9-s4" tabindex="-1">关于本阅读版</h2>
+<p>依据真橙控制考研教研组《真橙控制考研口袋书·经典控制理论册》（江西科学技术出版社，2026年2月，ISBN 978-7-5390-9917-0）扫描件重排。正文以网页文字、公式和表格呈现，复杂图形保留扫描图，局部语句为方便阅读作了整合；明确发现的笔误和适用条件已在相关位置标注“校注”。原页对照保留原版内容，便于核查。</p><footer class="chapter-footer"><button class="previous" data-step="-1">← 上一章</button><button class="next" data-step="1">下一章 →</button></footer></article></main>
+  <aside class="local-toc" aria-label="本章小节"><p>本章内容</p><nav id="section-links"></nav></aside>
+</div>
+<div class="reading-progress" aria-hidden="true"><span></span></div>
+<dialog id="search-dialog" aria-labelledby="search-heading"><div class="dialog-top"><h2 id="search-heading">搜索全书</h2><button class="dialog-close" aria-label="关闭搜索">×</button></div><label class="sr-only" for="search-input">输入知识点、定理或关键词</label><input id="search-input" type="search" placeholder="试试“稳态误差”“根轨迹”“描述函数”" autocomplete="off"><p id="search-status" aria-live="polite">输入关键词，查找正文与小节。</p><div id="search-results"></div></dialog>
+<dialog id="image-dialog" aria-label="放大图形"><div class="dialog-top"><p id="image-caption"></p><button class="dialog-close" aria-label="关闭图片">×</button></div><div class="image-pan"><img id="zoom-image" alt=""></div><p class="zoom-hint">可横向滚动；手机上可双指缩放。</p></dialog>
+<dialog id="source-dialog" aria-labelledby="source-heading"><div class="dialog-top"><h2 id="source-heading">原页对照</h2><button class="dialog-close" aria-label="关闭原页对照">×</button></div><div class="source-controls"><button id="source-prev" aria-label="上一原页">←</button><label for="source-select">扫描页</label><select id="source-select"></select><button id="source-next" aria-label="下一原页">→</button></div><div class="image-pan"><img id="source-image" alt=""></div></dialog>
+<script type="application/json" id="book-meta">[{"title": "前置知识与工具表", "toc": [{"id": "c0-s1", "title": "三角函数", "level": 2}, {"id": "c0-s2", "title": "代数运算", "level": 2}, {"id": "c0-s3", "title": "指数与对数", "level": 3}, {"id": "c0-s4", "title": "一元二次方程", "level": 3}, {"id": "c0-s5", "title": "因式分解", "level": 3}, {"id": "c0-s6", "title": "复数、复变量与复函数", "level": 2}, {"id": "c0-s7", "title": "复数的四则运算", "level": 3}, {"id": "c0-s8", "title": "欧拉公式", "level": 3}, {"id": "c0-s9", "title": "极限", "level": 2}, {"id": "c0-s10", "title": "导数与积分", "level": 2}, {"id": "c0-s11", "title": "解析几何", "level": 2}, {"id": "c0-s12", "title": "基本不等式", "level": 2}, {"id": "c0-s13", "title": "电学：无源网络", "level": 2}, {"id": "c0-s14", "title": "串联与并联", "level": 3}, {"id": "c0-s15", "title": "基尔霍夫定律", "level": 3}, {"id": "c0-s16", "title": "电学：运算放大器", "level": 2}, {"id": "c0-s17", "title": "反相比例运算电路", "level": 3}, {"id": "c0-s18", "title": "力学", "level": 2}, {"id": "c0-s19", "title": "弹簧—质量—阻尼系统", "level": 3}, {"id": "c0-s20", "title": "常用数值表", "level": 2}, {"id": "c0-s21", "title": "二阶欠阻尼系统", "level": 3}, {"id": "c0-s22", "title": "经典控制理论知识脉络", "level": 2}], "pages": [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}, {"title": "自动控制的一般概念", "toc": [{"id": "c1-s1", "title": "基本原理与五个信号量", "level": 2}, {"id": "c1-s2", "title": "控制方式", "level": 2}, {"id": "c1-s3", "title": "开环控制", "level": 3}, {"id": "c1-s4", "title": "反馈控制", "level": 3}, {"id": "c1-s5", "title": "系统分类", "level": 2}, {"id": "c1-s6", "title": "原书判断练习", "level": 3}, {"id": "c1-s7", "title": "小偏差线性化", "level": 2}], "pages": [21, 22, 23, 24, 25]}, {"title": "控制系统的数学模型", "toc": [{"id": "c2-s1", "title": "时域模型：微分方程", "level": 2}, {"id": "c2-s2", "title": "拉普拉斯变换与反变换", "level": 2}, {"id": "c2-s3", "title": "常用定理", "level": 3}, {"id": "c2-s4", "title": "典型函数变换表", "level": 3}, {"id": "c2-s5", "title": "习题：含常数项的反变换", "level": 3}, {"id": "c2-s6", "title": "复数域模型：传递函数", "level": 2}, {"id": "c2-s7", "title": "两种常用表达式", "level": 3}, {"id": "c2-s8", "title": "典型环节", "level": 3}, {"id": "c2-s9", "title": "结构图及等效变换", "level": 2}, {"id": "c2-s10", "title": "信号流图与梅森公式", "level": 2}, {"id": "c2-s11", "title": "含扰动的闭环传递函数", "level": 3}, {"id": "c2-s12", "title": "习题：由梅森公式求输出和误差", "level": 3}], "pages": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]}, {"title": "线性系统的时域分析法", "toc": [{"id": "c3-s1", "title": "输入信号和性能指标", "level": 2}, {"id": "c3-s2", "title": "一阶系统", "level": 2}, {"id": "c3-s3", "title": "二阶系统", "level": 2}, {"id": "c3-s4", "title": "欠阻尼：0<ζ<1", "level": 3}, {"id": "c3-s5", "title": "临界阻尼：ζ=1", "level": 3}, {"id": "c3-s6", "title": "过阻尼：ζ>1", "level": 3}, {"id": "c3-s7", "title": "极点分布与响应", "level": 3}, {"id": "c3-s8", "title": "比例微分、测速反馈与高阶近似", "level": 2}, {"id": "c3-s9", "title": "稳定性与劳斯判据", "level": 2}, {"id": "c3-s10", "title": "习题：劳斯表出现全零行", "level": 3}, {"id": "c3-s11", "title": "稳态误差", "level": 2}, {"id": "c3-s12", "title": "动态误差与扰动误差", "level": 3}], "pages": [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]}, {"title": "线性系统的根轨迹法", "toc": [{"id": "c4-s1", "title": "基本概念与根轨迹方程", "level": 2}, {"id": "c4-s2", "title": "绘制法则", "level": 2}, {"id": "c4-s3", "title": "习题一：常规根轨迹", "level": 3}, {"id": "c4-s4", "title": "广义根轨迹", "level": 2}, {"id": "c4-s5", "title": "参数根轨迹", "level": 3}, {"id": "c4-s6", "title": "零度根轨迹", "level": 3}, {"id": "c4-s7", "title": "由零极点分析性能", "level": 2}], "pages": [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]}, {"title": "线性系统的频域分析法", "toc": [{"id": "c5-s1", "title": "频率特性及表示", "level": 2}, {"id": "c5-s2", "title": "典型环节频率特性", "level": 2}, {"id": "c5-s3", "title": "奈氏图画法", "level": 2}, {"id": "c5-s4", "title": "非最小相位相角例题", "level": 3}, {"id": "c5-s5", "title": "伯德图画法", "level": 3}, {"id": "c5-s6", "title": "频域稳定判据", "level": 2}, {"id": "c5-s7", "title": "稳定裕度", "level": 2}, {"id": "c5-s8", "title": "典型二阶闭环频域指标", "level": 2}], "pages": [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]}, {"title": "线性系统的校正方法", "toc": [{"id": "c6-s1", "title": "校正方式", "level": 2}, {"id": "c6-s2", "title": "基本控制规律", "level": 2}, {"id": "c6-s3", "title": "无源校正网络", "level": 2}, {"id": "c6-s4", "title": "超前网络", "level": 3}, {"id": "c6-s5", "title": "滞后网络", "level": 3}, {"id": "c6-s6", "title": "滞后—超前网络", "level": 3}, {"id": "c6-s7", "title": "串联校正设计", "level": 2}, {"id": "c6-s8", "title": "超前校正", "level": 3}, {"id": "c6-s9", "title": "滞后校正", "level": 3}, {"id": "c6-s10", "title": "滞后—超前校正", "level": 3}, {"id": "c6-s11", "title": "反馈校正", "level": 2}, {"id": "c6-s12", "title": "复合校正与全补偿", "level": 2}, {"id": "c6-s13", "title": "按扰动补偿", "level": 3}, {"id": "c6-s14", "title": "按输入补偿", "level": 3}, {"id": "c6-s15", "title": "习题：过阻尼与斜坡零误差", "level": 3}], "pages": [77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89]}, {"title": "离散控制系统", "toc": [{"id": "c7-s1", "title": "基本概念", "level": 2}, {"id": "c7-s2", "title": "采样与复现", "level": 2}, {"id": "c7-s3", "title": "z 变换", "level": 2}, {"id": "c7-s4", "title": "变换表", "level": 3}, {"id": "c7-s5", "title": "习题一：三种反变换方法", "level": 3}, {"id": "c7-s6", "title": "数学模型", "level": 2}, {"id": "c7-s7", "title": "习题二：解差分方程", "level": 3}, {"id": "c7-s8", "title": "脉冲传递函数", "level": 3}, {"id": "c7-s9", "title": "习题三：采样开关位置的影响", "level": 3}, {"id": "c7-s10", "title": "闭环与典型结构", "level": 3}, {"id": "c7-s11", "title": "离散系统性能分析", "level": 2}, {"id": "c7-s12", "title": "稳定条件与双线性变换", "level": 3}, {"id": "c7-s13", "title": "朱利判据", "level": 3}, {"id": "c7-s14", "title": "习题四：朱利稳定性检验", "level": 3}, {"id": "c7-s15", "title": "稳态误差", "level": 3}, {"id": "c7-s16", "title": "习题五：零阶保持系统的误差", "level": 3}, {"id": "c7-s17", "title": "极点与瞬态响应", "level": 3}, {"id": "c7-s18", "title": "数字校正：最少拍设计", "level": 2}], "pages": [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109]}, {"title": "非线性控制系统分析", "toc": [{"id": "c8-s1", "title": "相平面法", "level": 2}, {"id": "c8-s2", "title": "奇点与局部线性化", "level": 3}, {"id": "c8-s3", "title": "描述函数法", "level": 2}, {"id": "c8-s4", "title": "常见描述函数", "level": 3}, {"id": "c8-s5", "title": "稳定性与自激振荡", "level": 2}, {"id": "c8-s6", "title": "组合非线性与相轨迹方程", "level": 2}, {"id": "c8-s7", "title": "习题一：继电系统的自振", "level": 3}, {"id": "c8-s8", "title": "习题二：非线性摆的奇点", "level": 3}, {"id": "c8-s9", "title": "习题三：等倾线", "level": 3}], "pages": [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]}, {"title": "附录：变换速查", "toc": [{"id": "c9-s1", "title": "拉普拉斯变换对", "level": 2}, {"id": "c9-s2", "title": "拉氏变换的性质", "level": 2}, {"id": "c9-s3", "title": "双边 Z 变换对", "level": 2}, {"id": "c9-s4", "title": "关于本阅读版", "level": 2}], "pages": [121, 122, 123, 124, 125, 126]}]</script>
+<noscript><p>请开启 JavaScript 以使用章节导航和数学公式渲染。</p><style>.chapter[hidden]{display:block!important}.sidebar,.toolbar,.local-toc{display:none}.page-shell{margin:0}main{max-width:850px;margin:auto}</style></noscript>
+</body></html>
