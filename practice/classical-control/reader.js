@@ -56,7 +56,7 @@
   let timer;
   addEventListener('scroll',()=>{
     drawProgress();clearTimeout(timer);timer=setTimeout(()=>{
-      if(changing)return;
+      if(changing||!$('#resume-note').hidden)return;
       const headings=[...articles[current].querySelectorAll('h2,h3')];
       const anchor=headings.filter(h=>h.getBoundingClientRect().top<innerHeight*.4).at(-1)?.id;
       try { localStorage.setItem('control-reading',JSON.stringify({chapter:current,anchor,ratio:scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})); } catch {}
