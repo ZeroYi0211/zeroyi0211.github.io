@@ -4,7 +4,7 @@
   <id>https://zeroyi0211.github.io/</id>
   <title>Xiaoyi's Blog</title>
   <subtitle>Yi Kejun's personal blog.</subtitle>
-  <updated>2026-11-02T22:21:07+08:00</updated>
+  <updated>2026-11-05T17:33:17+08:00</updated>
   <author>
     <name>Yi Kejun</name>
     <uri>https://zeroyi0211.github.io/</uri>
@@ -17,6 +17,32 @@
   <icon>/assets/img/favicons/favicon.ico</icon>
   <logo>/assets/img/favicons/favicon-96x96.png</logo>
 
+
+  
+  <entry>
+    <title>27考研政治一页纸：知识点手册阅读版</title>
+    <link href="https://zeroyi0211.github.io/posts/politics-onepage/" rel="alternate" type="text/html" title="27考研政治一页纸：知识点手册阅读版" />
+    <published>2026-11-05T12:00:00+08:00</published>
+  
+    <updated>2026-11-05T12:00:00+08:00</updated>
+  
+    <id>https://zeroyi0211.github.io/posts/politics-onepage/</id>
+    <content type="text/html" src="https://zeroyi0211.github.io/posts/politics-onepage/" />
+    <author>
+      <name>Yi Kejun</name>
+    </author>
+
+  
+    
+    <category term="Learning" />
+    
+    <category term="Politics" />
+    
+  
+
+  <summary>澄潇宇《27考研政治一页纸·知识点手册》的网页阅读重排版，保留原稿彩色重点、口诀及史纲会议专题。</summary>
+
+  </entry>
 
   
   <entry>
@@ -119,32 +145,6 @@
   
 
   <summary>对于全向轮底盘的力控框架设想</summary>
-
-  </entry>
-
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://zeroyi0211.github.io/posts/hello-world/" rel="alternate" type="text/html" title="Hello World" />
-    <published>2026-06-10T16:00:00+08:00</published>
-  
-    <updated>2026-06-10T16:00:00+08:00</updated>
-  
-    <id>https://zeroyi0211.github.io/posts/hello-world/</id>
-    <content type="text/html" src="https://zeroyi0211.github.io/posts/hello-world/" />
-    <author>
-      <name>Yi Kejun</name>
-    </author>
-
-  
-    
-    <category term="Blogging" />
-    
-    <category term="Notes" />
-    
-  
-
-  <summary>The first post after migrating this blog to Jekyll and Chirpy.</summary>
 
   </entry>
 
