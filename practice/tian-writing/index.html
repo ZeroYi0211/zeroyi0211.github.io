@@ -2869,6 +2869,70 @@ main{margin-left:var(--nav);padding:var(--top) 52px 60px;min-width:0}article{max
 </section></section><footer>田瀚博 · 原讲义重排 · 2026年11月2日</footer></article></main><a class="icon top-link" href="#grammar" title="返回开头" aria-label="返回正文开头"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></a><div class="status" role="status" aria-live="polite"></div>
 <dialog class="source-viewer" aria-label="原稿对照"><header class="viewer-tools"><span class="viewer-label">原稿对照</span><div><button type="button" class="icon previous-original" title="上一页" aria-label="上一页原稿"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button><select id="original-page" aria-label="选择原稿页"></select><button type="button" class="icon next-original" title="下一页" aria-label="下一页原稿"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div><div><button type="button" class="icon zoom-original" title="原尺寸" aria-label="切换原图尺寸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line><line x1="11" x2="11" y1="8" y2="14"></line><line x1="8" x2="14" y1="11" y2="11"></line></svg></button><button type="button" class="icon close-original" title="关闭" aria-label="关闭原稿对照"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></header><div class="viewer-scroll"><img alt="原稿"></div></dialog>
 <script>const manuscriptSources={"1":"assets/original-01.webp","2":"assets/original-02.webp","3":"assets/original-03.webp","4":"assets/original-04.webp","5":"assets/original-05.webp","6":"assets/original-06.webp","7":"assets/original-07.webp","8":"assets/original-08.webp","9":"assets/original-09.webp","10":"assets/original-10.webp","11":"assets/original-11.webp","12":"assets/original-12.webp","13":"assets/original-13.webp","14":"assets/original-14.webp","15":"assets/original-15.webp","16":"assets/original-16.webp","17":"assets/original-17.webp","18":"assets/original-18.webp","19":"assets/original-19.webp","20":"assets/original-20.webp","21":"assets/original-21.webp","22":"assets/original-22.webp","23":"assets/original-23.webp","24":"assets/original-24.webp","25":"assets/original-25.webp","26":"assets/original-26.webp","27":"assets/original-27.webp","28":"assets/original-28.webp","29":"assets/original-29.webp","30":"assets/original-30.webp","31":"assets/original-31.webp","32":"assets/original-32.webp","33":"assets/original-33.webp","34":"assets/original-34.webp","35":"assets/original-35.webp","36":"assets/original-36.webp","37":"assets/original-37.webp","38":"assets/original-38.webp","39":"assets/original-39.webp","40":"assets/original-40.webp","41":"assets/original-41.webp","42":"assets/original-42.webp","43":"assets/original-43.webp","44":"assets/original-44.webp","45":"assets/original-45.webp","46":"assets/original-46.webp","47":"assets/original-47.webp","48":"assets/original-48.webp","49":"assets/original-49.webp","50":"assets/original-50.webp","51":"assets/original-51.webp","52":"assets/original-52.webp","53":"assets/original-53.webp","54":"assets/original-54.webp","55":"assets/original-55.webp","56":"assets/original-56.webp","57":"assets/original-57.webp","58":"assets/original-58.webp","59":"assets/original-59.webp","60":"assets/original-60.webp","61":"assets/original-61.webp","62":"assets/original-62.webp","63":"assets/original-63.webp","64":"assets/original-64.webp","65":"assets/original-65.webp","66":"assets/original-66.webp","67":"assets/original-67.webp","68":"assets/original-68.webp","69":"assets/original-69.webp","70":"assets/original-70.webp","71":"assets/original-71.webp","72":"assets/original-72.webp","73":"assets/original-73.webp","74":"assets/original-74.webp","75":"assets/original-75.webp","76":"assets/original-76.webp"};
+function rememberReadingPosition(key) {
+  const root = document.querySelector('main');
+  const blocks = [...root.querySelectorAll('h1,h2,h3,h4,h5,p,li,figure,table,summary,.text')];
+  const details = [...root.querySelectorAll('details')];
+  const storageKey = key + '-reading-position';
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch {}
+  let restoring = true, printing = false, timer;
+  function headerBottom() {
+    return document.querySelector('.topbar').getBoundingClientRect().bottom + 16;
+  }
+  function save() {
+    clearTimeout(timer); timer = null;
+    if (restoring || printing) return;
+    const line = headerBottom();
+    let index = -1;
+    for (let i = 0; i < blocks.length; i++) {
+      const box = blocks[i].getBoundingClientRect();
+      if (box.height && box.top <= line) index = i;
+    }
+    const box = blocks[index]?.getBoundingClientRect();
+    const position = {
+      block:index, fraction:box ? (line - box.top) / box.height : 0,
+      y:scrollY, hash:location.hash, open:details.map(detail => detail.open)
+    };
+    try { localStorage.setItem(storageKey, JSON.stringify(position)); } catch {}
+  }
+  addEventListener('scroll', () => {
+    if (!restoring && !timer) timer = setTimeout(save, 180);
+  }, {passive:true});
+  addEventListener('pagehide', save);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); });
+  addEventListener('beforeprint', () => { printing = true; });
+  addEventListener('afterprint', () => { printing = false; });
+  // Mobile browsers can discard a background page without firing unload.
+  const shouldRestore = saved && (!location.hash || location.hash === saved.hash);
+  if (!shouldRestore) { restoring = false; return; }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  for (const event of ['pointerdown','touchstart','wheel','keydown']) addEventListener(event, cancel, {once:true,passive:true});
+  for (const [index, detail] of details.entries()) detail.open = saved.open?.[index] ?? detail.open;
+  const target = Number.isInteger(saved.block) ? blocks[saved.block] : null;
+  const images = [...root.querySelectorAll('img')].filter(image => !target || image.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING);
+  images.forEach(image => { image.loading = 'eager'; });
+  async function restore() {
+    await Promise.race([
+      Promise.all([document.fonts.ready, ...images.map(image => image.decode().catch(() => {}))]),
+      new Promise(resolve => setTimeout(resolve, 3000))
+    ]);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    if (!cancelled) {
+      const box = target?.getBoundingClientRect();
+      const top = box?.height && Number.isFinite(saved.fraction)
+        ? scrollY + box.top + box.height * saved.fraction - headerBottom() : saved.y;
+      if (Number.isFinite(top)) scrollTo({top,behavior:'instant'});
+    }
+    restoring = false;
+    for (const event of ['pointerdown','touchstart','wheel','keydown']) removeEventListener(event, cancel);
+  }
+  if (document.readyState === 'complete') restore();
+  else addEventListener('load', restore, {once:true});
+}
+
 const main=document.querySelector('main');
 const menu=document.querySelector('.menu-button');
 const sidebar=document.querySelector('.sidebar');
@@ -2916,4 +2980,5 @@ document.querySelectorAll('.chapter').forEach(node=>observer.observe(node));
 let scheduled=false;
 addEventListener('scroll',()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{const available=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(available?100*scrollY/available:0)+'%';scheduled=false;});},{passive:true});
 addEventListener('resize',()=>{if(innerWidth>1150&&document.body.classList.contains('nav-open'))navigation(false);});
-</script></body></html>
+
+rememberReadingPosition("tian-writing");</script></body></html>

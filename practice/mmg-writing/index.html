@@ -289,6 +289,70 @@ details{margin:20px 0;border-top:1px solid var(--line);border-bottom:1px solid v
 </section><footer>更新于2026年10月16日 · Xiaoyi's Blog</footer></article></main><div class="status" role="status" aria-live="polite"></div>
 <dialog class="question-viewer" aria-label="原题大图"><div class="viewer-toolbar"><span id="viewer-title">原题</span><button type="button" class="icon-button close-viewer" aria-label="关闭大图" title="关闭"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div><div class="viewer-scroll"><img alt="原题大图"></div></dialog>
 <script>const menuIcons={"open":"<svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 5h16\"></path><path d=\"M4 12h16\"></path><path d=\"M4 19h16\"></path></svg>","close":"<svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg>"};
+function rememberReadingPosition(key) {
+  const root = document.querySelector('main');
+  const blocks = [...root.querySelectorAll('h1,h2,h3,h4,h5,p,li,figure,table,summary,.text')];
+  const details = [...root.querySelectorAll('details')];
+  const storageKey = key + '-reading-position';
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch {}
+  let restoring = true, printing = false, timer;
+  function headerBottom() {
+    return document.querySelector('.topbar').getBoundingClientRect().bottom + 16;
+  }
+  function save() {
+    clearTimeout(timer); timer = null;
+    if (restoring || printing) return;
+    const line = headerBottom();
+    let index = -1;
+    for (let i = 0; i < blocks.length; i++) {
+      const box = blocks[i].getBoundingClientRect();
+      if (box.height && box.top <= line) index = i;
+    }
+    const box = blocks[index]?.getBoundingClientRect();
+    const position = {
+      block:index, fraction:box ? (line - box.top) / box.height : 0,
+      y:scrollY, hash:location.hash, open:details.map(detail => detail.open)
+    };
+    try { localStorage.setItem(storageKey, JSON.stringify(position)); } catch {}
+  }
+  addEventListener('scroll', () => {
+    if (!restoring && !timer) timer = setTimeout(save, 180);
+  }, {passive:true});
+  addEventListener('pagehide', save);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); });
+  addEventListener('beforeprint', () => { printing = true; });
+  addEventListener('afterprint', () => { printing = false; });
+  // Mobile browsers can discard a background page without firing unload.
+  const shouldRestore = saved && (!location.hash || location.hash === saved.hash);
+  if (!shouldRestore) { restoring = false; return; }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  for (const event of ['pointerdown','touchstart','wheel','keydown']) addEventListener(event, cancel, {once:true,passive:true});
+  for (const [index, detail] of details.entries()) detail.open = saved.open?.[index] ?? detail.open;
+  const target = Number.isInteger(saved.block) ? blocks[saved.block] : null;
+  const images = [...root.querySelectorAll('img')].filter(image => !target || image.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING);
+  images.forEach(image => { image.loading = 'eager'; });
+  async function restore() {
+    await Promise.race([
+      Promise.all([document.fonts.ready, ...images.map(image => image.decode().catch(() => {}))]),
+      new Promise(resolve => setTimeout(resolve, 3000))
+    ]);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    if (!cancelled) {
+      const box = target?.getBoundingClientRect();
+      const top = box?.height && Number.isFinite(saved.fraction)
+        ? scrollY + box.top + box.height * saved.fraction - headerBottom() : saved.y;
+      if (Number.isFinite(top)) scrollTo({top,behavior:'instant'});
+    }
+    restoring = false;
+    for (const event of ['pointerdown','touchstart','wheel','keydown']) removeEventListener(event, cancel);
+  }
+  if (document.readyState === 'complete') restore();
+  else addEventListener('load', restore, {once:true});
+}
+
 const menu=document.querySelector('.menu-button');
 const sidebar=document.querySelector('.sidebar');
 const links=[...document.querySelectorAll('.sidebar a')];
@@ -384,4 +448,5 @@ let resizeFrame;
 window.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{if(innerWidth>1100){setMenu(false);sidebar.inert=false;main.inert=false;}else if(!document.body.classList.contains('nav-open')){sidebar.inert=true;}drawChart();updateReading();});});
 if(innerWidth<=1100)sidebar.inert=true;
 drawChart();updateReading();
-</script></body></html>
+
+rememberReadingPosition("mmg-writing");</script></body></html>
